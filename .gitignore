@@ -1,15 +1,15 @@
 ### Eclipse (STS) ###
-/.classpath
-/.project
-/.git
-/.settings
-/target/
+.classpath
+.project
+.git/
+.settings/
+target/
 */target/**
 .apt_generated
 .classpath
 .factorypath
-.project
-.settings
+.project/
+.settings/
 .sts4-cache
 ### IntelliJ IDEA ###
 .idea
