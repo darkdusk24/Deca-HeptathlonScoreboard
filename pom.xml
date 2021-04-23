@@ -5,23 +5,46 @@
 	<groupId>Deca-HeptathlonScoreboard</groupId>
 	<artifactId>Deca-HeptathlonScoreboard</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<properties>
-    	<java.version>1.9</java.version>
+		<java.version>1.9</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<cucumber.version>6.9.1</cucumber.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
-			<version>6.9.1</version>
+			<version>${cucumber.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-junit</artifactId>
-			<version>6.9.1</version>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<compilerArgument>-Werror</compilerArgument>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

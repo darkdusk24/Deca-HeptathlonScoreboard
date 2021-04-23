@@ -1,0 +1,18 @@
+### Eclipse (STS) ###
+/.classpath
+/.project
+/.git
+/.settings
+/target/
+*/target/**
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.sts4-cache
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr 
