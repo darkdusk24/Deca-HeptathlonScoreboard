@@ -7,4 +7,4 @@ Then the <score> is calculated and outputted
 
 Examples:
 |performance|score|
-|					10| 1096|
+|				10.0| 1096|
