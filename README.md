@@ -14,4 +14,4 @@ När ni skriver en commit
 
 Sprint nr - filnamnsförkortning - meddelande
 
-T.ex: Sp1 - SD – Jag har ändrat bla bla
+T.ex:                                        Sp1 - SD – Jag har ändrat bla bla
