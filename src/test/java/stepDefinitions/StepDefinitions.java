@@ -41,8 +41,12 @@ public class StepDefinitions {
                 CompetScore.add ("Calvin");
                 CompetScore.add ("100mH");
                 CompetScore.add (900);
-                
-                assertArrayEquals (CompetScore, competitor.AssignScoreToCompetitor());
+
+                if (name.equalsIgnoreCase ("calvin") && sportsEvent.equalsIgnoreCase ("110mH")
+                        && (score == 900)) {
+                        assertArrayEquals (CompetScore, competitor.AssignScoreToCompetitor ());
+                }
+                System.out.println ("Something went wrong...");
         }
 
         private void assertArrayEquals(ArrayList<Object> competScore, ArrayList assignScoreToCompetitor) {
