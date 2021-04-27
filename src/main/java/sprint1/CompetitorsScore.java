@@ -7,15 +7,12 @@ public class CompetitorsScore {
     String sportsEvent;
     double score;
 
-
 public String AssignName(String name) {
     name = "Calvin";
-
     return name;
 }
 public String AssignEvent(String sportsEvent) {
     sportsEvent = "110mH";
-
     return sportsEvent;
 }
 public double AssignScore(double score) {
@@ -34,8 +31,6 @@ public ArrayList AssignScoreToCompetitor() {
         AssignScoreToCompetitor.add ("100mH");
         AssignScoreToCompetitor.add (900);
 
-
         return AssignScoreToCompetitor;
     }
-
 }
