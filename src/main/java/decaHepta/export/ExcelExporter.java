@@ -44,7 +44,7 @@ public class ExcelExporter {
             
             for (int i = 0; i < rows.size(); i++) {
             	List<Object> rowData = rows.get(i);
-            	Row row = sheet.createRow(i + 2);
+            	Row row = sheet.createRow(i + 1); 
             	for (int j = 0; j < rowData.size(); j++) {
 	                Cell cell = row.createCell(j);
 	                cell.setCellValue(rowData.get(j) != null ? rowData.get(j).toString() : "");
