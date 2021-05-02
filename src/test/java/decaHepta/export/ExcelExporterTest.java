@@ -33,6 +33,6 @@ public class ExcelExporterTest {
     	competitor2.add("90");
     	rowData.add(competitor2);
     	
-    	ExcelExporter.export(headers, rowData);
+    	// ExcelExporter.export(headers, rowData);
     }
 }
