@@ -6,8 +6,10 @@ import io.cucumber.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 
-@CucumberOptions(features="src/test/resources/Features", glue="stepDefinitions")
-public class TestRunner {
+@CucumberOptions(features="src/test/resources/Features", 
+glue="stepDefinitions", 
+plugin = {"pretty", "summary"})
+public class RunCucumberTests {
 }
 
 

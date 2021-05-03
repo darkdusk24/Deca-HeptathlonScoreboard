@@ -1,38 +1,43 @@
 package sprint1;
 
-import java.util.ArrayList;
 
 public class CompetitorsScore {
-	String name;
-	String sportsEvent;
-	double score;
+	
+	private Competitor competitor;
+	private String sportsEvent;
+	private Double score;
+	
 
-	public String AssignName(String name) {
-		name = "Calvin";
-		return name;
+	public CompetitorsScore(String name) {
+		competitor = new Competitor(name);
 	}
 
-	public String AssignEvent(String sportsEvent) {
-		sportsEvent = "110mH";
+	public void setSportsEvent(String sportsEvent) {
+		this.sportsEvent = sportsEvent;
+	}
+
+	public void setScore(Double score) {
+		this.score = score;
+	}
+
+	public String getName() {
+		return competitor.getName();
+	}
+	
+	public String getSportsEvent() {
 		return sportsEvent;
 	}
 
-	public double AssignScore(double score) {
-		score = 900;
+	public Double getScore() {
 		return score;
 	}
-
-	public ArrayList AssignScoreToCompetitor() {
-		this.name = name;
-		this.sportsEvent = sportsEvent;
-		this.score = score;
-
-		ArrayList<Object> AssignScoreToCompetitor = new ArrayList<>();
-
-		AssignScoreToCompetitor.add("Calvin");
-		AssignScoreToCompetitor.add("100mH");
-		AssignScoreToCompetitor.add(900);
-
-		return AssignScoreToCompetitor;
+	
+	@Override
+	public String toString() {
+		String objectData = getName() + ", ";
+		objectData +=  getSportsEvent() + ", ";
+		objectData += getScore();
+		return objectData;
 	}
+	
 }
