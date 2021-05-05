@@ -35,7 +35,7 @@ public class DecaHeptaPointcalcSteps {
 		performance = perf;
 	}
 
-	@Then("the {int} is calculated and outputted")
+	@Then("the {int} is calculated and returned")
 	public void the_result_is_outputted(int result) {
 		assertEquals(result, calc.OneHundredMeters(performance));
 	}

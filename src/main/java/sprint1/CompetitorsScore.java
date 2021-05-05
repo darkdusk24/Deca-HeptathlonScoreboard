@@ -12,6 +12,10 @@ public class CompetitorsScore {
 		competitor = new Competitor(name);
 	}
 
+	public void updateName(String name) {
+		this.competitor.setName(name);
+	}
+	
 	public void setSportsEvent(String sportsEvent) {
 		this.sportsEvent = sportsEvent;
 	}

@@ -3,7 +3,7 @@ I want to be able to input a contestants performance and have the points calcula
 
 Scenario Outline: 100 meters
 When the <performance> is entered
-Then the <score> is calculated and outputted
+Then the <score> is calculated and returned
 
 Examples:
 |performance|score|
