@@ -1,15 +1,14 @@
+*~
+.DS_Store
 ### Eclipse (STS) ###
 .classpath
 .project
 .git/
 .settings/
 target/
-*/target/**
+*/target/* 
 .apt_generated
-.classpath
 .factorypath
-.project/
-.settings/
 .sts4-cache
 ### IntelliJ IDEA ###
 .idea
