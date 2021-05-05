@@ -5,7 +5,8 @@
 	<groupId>Deca-HeptathlonScoreboard</groupId>
 	<artifactId>Deca-HeptathlonScoreboard</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
+    <packaging>jar</packaging>
+    
 	<properties>
 		<java.version>9</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -13,8 +14,19 @@
    		<maven.compiler.target>9</maven.compiler.target>
 		<cucumber.version>6.9.1</cucumber.version>
 	</properties>
-
+	
 	<dependencies>
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi</artifactId>
+		<version>4.1.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi-ooxml</artifactId>
+		<version>4.1.1</version>
+	</dependency>
+
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>

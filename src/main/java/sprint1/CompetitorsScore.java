@@ -43,5 +43,4 @@ public class CompetitorsScore {
 		objectData += getScore();
 		return objectData;
 	}
-	
 }

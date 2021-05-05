@@ -14,5 +14,5 @@ target/
 .idea
 *.iws
 *.iml
-*.ipr
-bin/
+*.ipr 
+/bin/
