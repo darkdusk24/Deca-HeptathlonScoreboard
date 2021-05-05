@@ -47,7 +47,7 @@ public class Excel {
 		for (int i = 0; i < 16; i++) {
 			sh.autoSizeColumn(i);
 		}
-		
+
 		// Heptathlon inputs
 		Row row00 = sh2.createRow(0);
 		row00.createCell(0).setCellValue("Number");

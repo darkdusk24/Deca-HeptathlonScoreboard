@@ -1,17 +1,19 @@
 package sprint1;
 
-public class Competitor {
+public class Contestant {
 
 	private String name;
 
-	public Competitor(String name) {
+	public Contestant(String name) {
 		super();
 		this.name = name;
 	}
+
 	public void setName(String string) {
 		name = string;
 
 	}
+
 	public String getName() {
 		return name;
 	}

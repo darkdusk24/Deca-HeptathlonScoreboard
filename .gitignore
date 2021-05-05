@@ -16,3 +16,4 @@ target/
 *.iml
 *.ipr 
 /bin/
+/Deca-HeptathlonScoreboard.xls

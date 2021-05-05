@@ -1,21 +1,23 @@
 package sprint1;
 
-
 public class CompetitorsScore {
-	
-	private Competitor competitor;
+
+	private Contestant competitor;
 	private String sportsEvent;
 	private Double score;
-	
+
+	public CompetitorsScore() {
+
+	}
 
 	public CompetitorsScore(String name) {
-		competitor = new Competitor(name);
+		competitor = new Contestant(name);
 	}
 
 	public void updateName(String name) {
 		this.competitor.setName(name);
 	}
-	
+
 	public void setSportsEvent(String sportsEvent) {
 		this.sportsEvent = sportsEvent;
 	}
@@ -27,7 +29,7 @@ public class CompetitorsScore {
 	public String getName() {
 		return competitor.getName();
 	}
-	
+
 	public String getSportsEvent() {
 		return sportsEvent;
 	}
@@ -35,11 +37,11 @@ public class CompetitorsScore {
 	public Double getScore() {
 		return score;
 	}
-	
+
 	@Override
 	public String toString() {
 		String objectData = getName() + ", ";
-		objectData +=  getSportsEvent() + ", ";
+		objectData += getSportsEvent() + ", ";
 		objectData += getScore();
 		return objectData;
 	}

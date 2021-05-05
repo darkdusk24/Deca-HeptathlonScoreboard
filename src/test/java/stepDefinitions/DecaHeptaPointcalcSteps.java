@@ -2,13 +2,13 @@ package stepDefinitions;
 
 import static org.junit.Assert.*;
 import io.cucumber.java.en.*;
-import sprint1.Competitor;
+import sprint1.Contestant;
 import sprint1.ScoreCalculator;
 
 public class DecaHeptaPointcalcSteps {
 
 	private String inputName;
-	private Competitor competitor;
+	private Contestant competitor;
 
 	private double performance;
 	private ScoreCalculator calc = new ScoreCalculator();
@@ -21,7 +21,7 @@ public class DecaHeptaPointcalcSteps {
 	@When("I enter the contestants name, {string}")
 	public void i_enter_the_contestant_name(String input) {
 		inputName = input;
-		competitor = new Competitor(inputName);
+		competitor = new Contestant(inputName);
 	}
 
 	@Then("the name is saved for later use")
