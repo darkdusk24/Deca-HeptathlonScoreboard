@@ -1,13 +1,12 @@
 package sprint1;
 
+import java.util.List;
+
 public class CompetitorsScore {
 
 	private Contestant competitor;
-	private String sportsEvent;
-	private Double score;
 
 	public CompetitorsScore() {
-
 	}
 
 	public CompetitorsScore(String name) {
@@ -18,31 +17,30 @@ public class CompetitorsScore {
 		this.competitor.setName(name);
 	}
 
-	public void setSportsEvent(String sportsEvent) {
-		this.sportsEvent = sportsEvent;
+	public void addSportEvent(ContestantSportEvent sportEvent) {
+		this.competitor.addSportEvent(sportEvent);
 	}
-
-	public void setScore(Double score) {
-		this.score = score;
+	
+	public void addSportEvent(String sportEvent, Double result, Double score) {
+		this.competitor.addSportEvent(new ContestantSportEvent(sportEvent, result, score));
 	}
 
 	public String getName() {
 		return competitor.getName();
 	}
 
-	public String getSportsEvent() {
-		return sportsEvent;
+	public List<ContestantSportEvent> getSportsEvent() {
+		return competitor.getSportEvents();
 	}
-
-	public Double getScore() {
-		return score;
+	
+	public Double getTotalScore() {
+		return competitor.getTotalScore();
 	}
 
 	@Override
 	public String toString() {
 		String objectData = getName() + ", ";
-		objectData += getSportsEvent() + ", ";
-		objectData += getScore();
+		objectData += getTotalScore();
 		return objectData;
 	}
 }

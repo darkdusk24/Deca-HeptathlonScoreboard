@@ -7,19 +7,21 @@ import sprint1.CompetitorsScore;
 public class CompetitorSteps {
 
 	private CompetitorsScore competitorScore;
-	private Double expectedScore;
 
-	@Given("I have entered a score of {double} for {string} in event {string}")
-	public void i_have_entered_an_event_score_for_a_contestant(Double score, String competitorName, String event) {
+	@Given("I have entered a result {double} and score of {double} for {string} in event {string}")
+	public void i_have_entered_an_event_score_for_a_contestant(Double result, Double score, String competitorName, String event) {
 		competitorScore = new CompetitorsScore(competitorName);
-		competitorScore.setSportsEvent(event);
-		competitorScore.setScore(score);
-		expectedScore = score;
+		competitorScore.addSportEvent(event, result, score);
+	}
+	
+	@Given("I have added a result {double} and score of {double} in event {string}")
+	public void i_have_added_an_event_score_for_a_contestant(Double result, Double score, String event) {
+		competitorScore.addSportEvent(event, result, score);
 	}
 
-	@Then("I can verify the score")
-	public void i_can_verify_the_score() {
-		assertEquals(expectedScore, competitorScore.getScore(), 0);
+	@Then("I can verify the {double}")
+	public void i_can_verify_the_score(Double score) {
+		assertEquals(score, competitorScore.getTotalScore());
 	}
 
 }
