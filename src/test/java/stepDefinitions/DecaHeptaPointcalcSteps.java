@@ -36,7 +36,7 @@ public class DecaHeptaPointcalcSteps {
 	public void the_main_event_is_a(String mainEvent) {
 		combinedEvent = mainEvent;
 	}
-	
+
 	@Given("the event is {string}")
 	public void the_event_is(String contest) {
 		event = contest;
