@@ -10,7 +10,9 @@ public class DecaHeptaPointcalcSteps {
 	private String inputName;
 	private Contestant competitor;
 
-	private double performance;
+	private String combinedEvent;
+	private String event;
+	private double result;
 	private ScoreCalculator calc = new ScoreCalculator();
 
 	// HeptaDeca Feature
@@ -30,14 +32,24 @@ public class DecaHeptaPointcalcSteps {
 	}
 
 	// PointCalculator Feature
+	@Given("the main event is a {string}")
+	public void the_main_event_is_a(String mainEvent) {
+		combinedEvent = mainEvent;
+	}
+	
+	@Given("the event is {string}")
+	public void the_event_is(String contest) {
+		event = contest;
+	}
+
 	@When("the {double} is entered")
 	public void the_is_entered(double perf) {
-		performance = perf;
+		result = perf;
 	}
 
 	@Then("the {int} is calculated and returned")
-	public void the_result_is_outputted(int result) {
-		assertEquals(result, calc.OneHundredMeters(performance));
+	public void the_result_is_outputted(int score) {
+		assertEquals(score, calc.eventScore(combinedEvent, event, result));
 	}
 
 }
