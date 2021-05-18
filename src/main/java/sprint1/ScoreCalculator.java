@@ -65,4 +65,14 @@ public class ScoreCalculator {
 
 		return score;
 	}
+	
+	public int totalScore(int[] scores) {
+		int totalScore = 0;
+		
+		for(int i = 0; i < scores.length; i++) {
+			totalScore += scores[i];
+		}
+		
+		return totalScore;
+	}
 }
