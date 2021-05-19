@@ -50,7 +50,7 @@ public class DecaHeptaPointcalcSteps {
 
 	@Then("the {int} is calculated and returned")
 	public void the_result_is_outputted(int score) {
-		assertEquals(score, calc.eventScore(combinedEvent, event, result));
+		assertEquals(score, calc.eventScoreCalculation(combinedEvent, event, result));
 	}
 
 	@Given("the contestants scores are [{int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}]")
@@ -70,7 +70,7 @@ public class DecaHeptaPointcalcSteps {
 
 	@Then("the {int} is calculated and it is returned")
 	public void the_is_calculated_and_it_is_returned(int totalScore) {
-		assertEquals(totalScore, calc.totalScore(scoreboard));
+		assertEquals(totalScore, calc.totalScoreCalculation(scoreboard));
 	}
 
 }

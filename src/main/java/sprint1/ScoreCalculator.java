@@ -2,7 +2,7 @@ package sprint1;
 
 public class ScoreCalculator {
 
-	public int eventScore(String combinedEvent, String event, double result) {
+	public int eventScoreCalculation(String combinedEvent, String event, double result) {
 		int score = 0;
 
 		switch (event) {
@@ -66,7 +66,7 @@ public class ScoreCalculator {
 		return score;
 	}
 	
-	public int totalScore(int[] scores) {
+	public int totalScoreCalculation(int[] scores) {
 		int totalScore = 0;
 		
 		for(int i = 0; i < scores.length; i++) {
