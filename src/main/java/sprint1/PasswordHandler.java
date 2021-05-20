@@ -4,7 +4,7 @@ public class PasswordHandler {
 	
 	private String password = "DecaHepta123";
 	
-	public Boolean passwordResponse(String input) {
+	public Boolean passwordCheck(String input) {
 		Boolean inputCheck = false;
 		
 		if(input.equals(password)) {

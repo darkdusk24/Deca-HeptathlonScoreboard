@@ -18,7 +18,7 @@ public class DecaHeptaPasswordSteps {
 	@Then("the correct {string} should happen")
 	public void the_correct_should_happen(String response) {
 		Boolean output = Boolean.valueOf(response);
-		assertEquals(output, pass.passwordResponse(password));
+		assertEquals(output, pass.passwordCheck(password));
 	}
 
 }
