@@ -9,6 +9,9 @@ public class MainProgram {
 	private static Scanner scan = new Scanner(System.in);
 	private static PasswordHandler pass = new PasswordHandler();
 	private static List<Contestant> scoreboard = new ArrayList<>();
+	private static String[] decathlon = { "100 m", "Long jump", "Shot put", "High Jump", "400 m", "110 m hurdles",
+			"Discus throw", "Pole vault", "Javelin throw", "1500 m" };
+	private static ScoreCalculator calc = new ScoreCalculator();
 
 	public static void main(String[] args) {
 
@@ -24,6 +27,7 @@ public class MainProgram {
 		}
 
 		contestantInput();
+		resultInput();
 
 	}
 
@@ -38,10 +42,10 @@ public class MainProgram {
 				if (name.equalsIgnoreCase("Exit")) {
 					break;
 				}
-				
+
 				System.out.println("Input the contestants countrys alpha-3 code.");
 				String country = scan.nextLine();
-				
+
 				System.out.println("Input the contestants number.");
 				int number = Integer.valueOf(scan.nextLine());
 
@@ -54,6 +58,28 @@ public class MainProgram {
 			contestants++;
 		}
 
+	}
+
+	private static void resultInput() {
+		System.out.println(
+				"The result should be measured in seconds (running), metres (throwing) or centimetres (jumping). \n");
+			
+		for (int i = 0; i < decathlon.length; i++) {
+			for (int j = 0; j < scoreboard.size(); j++) {
+				System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the " + decathlon[i]
+						+ " event. Or write exit to stop the program.");
+				
+				String input = scan.nextLine();
+				
+				if(input.equalsIgnoreCase("Exit")) {
+					i = 15;
+					break;
+				} else {
+				double result = Double.valueOf(input);
+				int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
+				}
+			}
+		}
 	}
 
 }
