@@ -11,7 +11,10 @@ public class MainProgram {
 	private static List<Contestant> scoreboard = new ArrayList<>();
 	private static String[] decathlon = { "100 m", "Long jump", "Shot put", "High Jump", "400 m", "110 m hurdles",
 			"Discus throw", "Pole vault", "Javelin throw", "1500 m" };
+	private static String[] heptathlon = { "200 m", "800 m", "100 m hurdles", "High jump", "Long jump", "Shot put",
+			"Javelin throw" };
 	private static ScoreCalculator calc = new ScoreCalculator();
+	private static String mainEvent = "Heptathlon";
 
 	public static void main(String[] args) {
 
@@ -28,7 +31,6 @@ public class MainProgram {
 
 		contestantInput();
 		resultInput();
-
 	}
 
 	private static void contestantInput() {
@@ -63,20 +65,41 @@ public class MainProgram {
 	private static void resultInput() {
 		System.out.println(
 				"The result should be measured in seconds (running), metres (throwing) or centimetres (jumping). \n");
-			
-		for (int i = 0; i < decathlon.length; i++) {
-			for (int j = 0; j < scoreboard.size(); j++) {
-				System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the " + decathlon[i]
-						+ " event. Or write exit to stop the program.");
-				
-				String input = scan.nextLine();
-				
-				if(input.equalsIgnoreCase("Exit")) {
-					i = 15;
-					break;
-				} else {
-				double result = Double.valueOf(input);
-				int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
+
+		if (mainEvent.equalsIgnoreCase("Decathlon")) {
+			for (int i = 0; i < decathlon.length; i++) {
+				for (int j = 0; j < scoreboard.size(); j++) {
+					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the " + decathlon[i]
+							+ " event. Or write exit to stop the program.");
+
+					String input = scan.nextLine();
+
+					if (input.equalsIgnoreCase("Exit")) {
+						i = 15;
+						break;
+					} else {
+						double result = Double.valueOf(input);
+						int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
+						System.out.println(score);
+					}
+				}
+			}
+		} else if (mainEvent.equalsIgnoreCase("Heptathlon")) {
+			for (int i = 0; i < heptathlon.length; i++) {
+				for (int j = 0; j < scoreboard.size(); j++) {
+					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the " + heptathlon[i]
+							+ " event. Or write exit to stop the program.");
+
+					String input = scan.nextLine();
+
+					if (input.equalsIgnoreCase("Exit")) {
+						i = 15;
+						break;
+					} else {
+						double result = Double.valueOf(input);
+						int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
+						System.out.println(score);
+					}
 				}
 			}
 		}

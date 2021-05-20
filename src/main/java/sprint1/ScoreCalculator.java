@@ -52,13 +52,13 @@ public class ScoreCalculator {
 		case "1500 m":
 			score = (int) (0.03768 * Math.pow((480.0 - result), 1.85));
 			break;
-		case "200 metres":
+		case "200 m":
 			score = (int) (4.99087 * Math.pow((42.5 - result), 1.81));
 			break;
-		case "800 metres":
+		case "800 m":
 			score = (int) (0.11193 * Math.pow((254.0 - result), 1.88));
 			break;
-		case "100 metres hurdles":
+		case "100 m hurdles":
 			score = (int) (9.23076 * Math.pow((26.7 - result), 1.835));
 			break;
 		}
