@@ -7,6 +7,7 @@ public class Contestant {
 
 	private String name;
 	private int number;
+	private int place;
 	private String country;
 	private List<ContestantSportEvent> sportEvents = new ArrayList<>();
 
@@ -47,17 +48,21 @@ public class Contestant {
 		return sportEvents;
 	}
 
-	public Double getTotalScore() {
-		Double totalScore = 0.0;
-		for (ContestantSportEvent sportEvent : sportEvents) {
-			totalScore += sportEvent.getScore();
-		}
-		return totalScore;
+	public int getPlace() {
+		return place;
+	}
+
+	public void setPlace(int place) {
+		this.place = place;
 	}
 
 	@Override
 	public String toString() {
-		return name + "(" + number + ") " + country + ". Score: " + getTotalScore();
+		String scores = "";
+		for (ContestantSportEvent sportEvent : getSportEvents()) {
+			scores += sportEvent.toString();
+		}
+		return place + ". " + name + "(" + number + ") " + country + ": " + scores;
 	}
 	
 	

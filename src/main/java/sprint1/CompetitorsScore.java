@@ -34,8 +34,14 @@ public class CompetitorsScore {
 	}
 	
 	public Double getTotalScore() {
-		return competitor.getTotalScore();
+		Double totalScore = 0.0;
+		for (ContestantSportEvent sportEvent : competitor.getSportEvents()) {
+			totalScore += sportEvent.getScore();
+		}
+		return totalScore;
 	}
+	
+
 
 	@Override
 	public String toString() {

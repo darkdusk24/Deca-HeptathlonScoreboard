@@ -22,4 +22,11 @@ public class ContestantSportEvent {
 	public Double getScore() {
 		return score;
 	}
+
+	@Override
+	public String toString() {
+		return sportEvent + ": score=" + score + ", result=" + result + "; ";
+	}
+	
+	
 }
