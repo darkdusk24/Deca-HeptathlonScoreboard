@@ -12,7 +12,7 @@ Examples:
 |		"Decathlon"|	   "100 m"|				 10.0| 1096|
 |		"Decathlon"| "Long jump"|				700.0|	814|
 |	 "Heptathlon"| "Long jump"|				700.0| 1172|
-|	 "Heptathlon"|"200 metres"|				 23.0| 1079|
+|	 "Heptathlon"|		 "200 m"|				 23.0| 1079|
 
 
 Scenario Outline: Total score
