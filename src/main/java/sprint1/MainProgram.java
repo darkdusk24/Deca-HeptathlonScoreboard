@@ -9,10 +9,10 @@ public class MainProgram {
 	private static Scanner scan = new Scanner(System.in);
 	private static PasswordHandler pass = new PasswordHandler();
 	private static List<Contestant> scoreboard = new ArrayList<>();
-	private static String[] decathlon = { "100 m", "Long jump", "Shot put", "High Jump", "400 m", "110 m hurdles",
+	private static String[] decathlon = { "100 m", "Long jump", "Shot put", "High jump", "400 m", "110 m hurdles",
 			"Discus throw", "Pole vault", "Javelin throw", "1500 m" };
-	private static String[] heptathlon = { "200 m", "800 m", "100 m hurdles", "High jump", "Long jump", "Shot put",
-			"Javelin throw" };
+	private static String[] heptathlon = { "100 m hurdles", "High jump", "Shot put", "200 m", "Long jump", "Javelin throw",
+			"800 m" };
 	private static ScoreCalculator calc = new ScoreCalculator();
 	private static String mainEvent = "Heptathlon";
 
