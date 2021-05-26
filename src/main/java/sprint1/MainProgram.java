@@ -101,7 +101,7 @@ public class MainProgram {
 					} else {
 						double result = Double.valueOf(input);
 						int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
-						scoreboard.get(j).addSportEvent(decathlon[i], score, result);
+						scoreboard.get(j).addSportEvent(heptathlon[i], score, result);
 						System.out.println(score);
 					}
 				}
