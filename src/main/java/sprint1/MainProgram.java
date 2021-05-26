@@ -17,7 +17,12 @@ public class MainProgram {
 	private static String mainEvent = "Heptathlon";
 
 	public static void main(String[] args) {
-
+		logIn();
+		contestantInput();
+		resultInput();
+	}
+	
+	private static void logIn() {
 		while (true) {
 			System.out.println("Input the password.");
 			String password = scan.nextLine();
@@ -28,9 +33,6 @@ public class MainProgram {
 				System.out.println("Wrong password");
 			}
 		}
-
-		contestantInput();
-		resultInput();
 	}
 
 	private static void contestantInput() {
@@ -51,7 +53,7 @@ public class MainProgram {
 				System.out.println("Input the contestants number.");
 				int number = Integer.valueOf(scan.nextLine());
 
-				Contestant competitor = new Contestant(name);
+				Contestant competitor = new Contestant(name, number, country);
 				scoreboard.add(competitor);
 			} else {
 				break;
@@ -80,6 +82,7 @@ public class MainProgram {
 					} else {
 						double result = Double.valueOf(input);
 						int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
+						scoreboard.get(j).addSportEvent(decathlon[i], score, result);
 						System.out.println(score);
 					}
 				}
@@ -98,6 +101,7 @@ public class MainProgram {
 					} else {
 						double result = Double.valueOf(input);
 						int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
+						scoreboard.get(j).addSportEvent(decathlon[i], score, result);
 						System.out.println(score);
 					}
 				}

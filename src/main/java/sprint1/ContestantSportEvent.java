@@ -2,10 +2,10 @@ package sprint1;
 
 public class ContestantSportEvent {
 	private String sportEvent;
-	private Double score;
+	private int score;
 	private Double result;
 	
-	public ContestantSportEvent(String sportEvent, Double result, Double score) {
+	public ContestantSportEvent(String sportEvent, Double result, int score) {
 		this.sportEvent = sportEvent;
 		this.score = score;
 		this.result = result;
@@ -19,7 +19,7 @@ public class ContestantSportEvent {
 		return sportEvent;
 	}
 
-	public Double getScore() {
+	public int getScore() {
 		return score;
 	}
 

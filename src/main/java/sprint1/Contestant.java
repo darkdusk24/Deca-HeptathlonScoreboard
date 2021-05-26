@@ -10,9 +10,11 @@ public class Contestant {
 	private int place;
 	private String country;
 	private List<ContestantSportEvent> sportEvents = new ArrayList<>();
-
-	public Contestant(String name) {
+	
+	public Contestant(String name, int number, String country) {
 		this.name = name;
+		this.number = number;
+		this.country = country;
 	}
 
 	public void setName(String string) {
@@ -40,8 +42,9 @@ public class Contestant {
 		this.country = country;
 	}
 	
-	public void addSportEvent(ContestantSportEvent sportEvent) {
-		this.sportEvents.add(sportEvent);
+	public void addSportEvent(String sportEvent, int score, double result) {
+		ContestantSportEvent event = new ContestantSportEvent(sportEvent, result, score);
+		this.sportEvents.add(event);
 	}
 
 	public List<ContestantSportEvent> getSportEvents() {

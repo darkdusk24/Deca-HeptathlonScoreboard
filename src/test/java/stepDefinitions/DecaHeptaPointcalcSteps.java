@@ -8,6 +8,8 @@ import sprint1.ScoreCalculator;
 public class DecaHeptaPointcalcSteps {
 
 	private String inputName;
+	private String countryCode;
+	private int number;
 	private Contestant competitor;
 
 	private String combinedEvent;
@@ -21,15 +23,27 @@ public class DecaHeptaPointcalcSteps {
 	public void i_m_at_the_menu_for_inputting_contestant() {
 	}
 
-	@When("I enter the contestants name, {string}")
-	public void i_enter_the_contestant_name(String input) {
-		inputName = input;
-		competitor = new Contestant(inputName);
+	@When("I enter the contestants {string}")
+	public void i_enter_the_contestants(String name) {
+		inputName = name;
+	}
+
+	@When("I enter the contestants countrys alpha3 {string}")
+	public void i_enter_the_contestants_countrys_alpha3(String country) {
+		countryCode = country;
+	}
+
+	@When("I enter the contestants {int}")
+	public void i_enter_the_contestants(int number) {
+		this.number = number;
 	}
 
 	@Then("the name is saved for later use")
 	public void the_name_is_saved_for_later_use() {
+		competitor = new Contestant(inputName, number, countryCode);
 		assertEquals(inputName, competitor.getName());
+		assertEquals(countryCode, competitor.getCountry());
+		assertEquals(number, competitor.getNumber());
 	}
 
 	// PointCalculator Feature
@@ -54,8 +68,8 @@ public class DecaHeptaPointcalcSteps {
 	}
 
 	@Given("the contestants scores are [{int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}]")
-	public void the_contestants_scores_are(int int1, int int2, int int3, int int4, int int5,
-			int int6, int int7, int int8, int int9, int int10) {
+	public void the_contestants_scores_are(int int1, int int2, int int3, int int4, int int5, int int6, int int7,
+			int int8, int int9, int int10) {
 		scoreboard[0] = int1;
 		scoreboard[1] = int2;
 		scoreboard[2] = int3;

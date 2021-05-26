@@ -9,21 +9,21 @@ public class CompetitorsScore {
 	public CompetitorsScore() {
 	}
 
-	public CompetitorsScore(String name) {
-		competitor = new Contestant(name);
-	}
+//	public CompetitorsScore(String name) {
+//		competitor = new Contestant(name);
+//	}
 
 	public void updateName(String name) {
 		this.competitor.setName(name);
 	}
 
-	public void addSportEvent(ContestantSportEvent sportEvent) {
-		this.competitor.addSportEvent(sportEvent);
-	}
-	
-	public void addSportEvent(String sportEvent, Double result, Double score) {
-		this.competitor.addSportEvent(new ContestantSportEvent(sportEvent, result, score));
-	}
+//	public void addSportEvent(ContestantSportEvent sportEvent) {
+//		this.competitor.addSportEvent(sportEvent);
+//	}
+//	
+//	public void addSportEvent(String sportEvent, Double result, Double score) {
+//		this.competitor.addSportEvent(new ContestantSportEvent(sportEvent, result, score));
+//	}
 
 	public String getName() {
 		return competitor.getName();
