@@ -62,10 +62,12 @@ public class Contestant {
 	@Override
 	public String toString() {
 		String scores = "";
+		int totalScore = 0;
 		for (ContestantSportEvent sportEvent : getSportEvents()) {
 			scores += sportEvent.toString();
+			totalScore += sportEvent.getScore();
 		}
-		return place + ". " + name + "(" + number + ") " + country + ": " + scores;
+		return name + "(" + number + ") " + country + ": " + scores + " Total Score: " + totalScore;
 	}
 	
 	

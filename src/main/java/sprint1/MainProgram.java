@@ -11,8 +11,8 @@ public class MainProgram {
 	private static List<Contestant> scoreboard = new ArrayList<>();
 	private static String[] decathlon = { "100 m", "Long jump", "Shot put", "High jump", "400 m", "110 m hurdles",
 			"Discus throw", "Pole vault", "Javelin throw", "1500 m" };
-	private static String[] heptathlon = { "100 m hurdles", "High jump", "Shot put", "200 m", "Long jump", "Javelin throw",
-			"800 m" };
+	private static String[] heptathlon = { "100 m hurdles", "High jump", "Shot put", "200 m", "Long jump",
+			"Javelin throw", "800 m" };
 	private static ScoreCalculator calc = new ScoreCalculator();
 	private static String mainEvent = "Heptathlon";
 
@@ -21,7 +21,7 @@ public class MainProgram {
 		contestantInput();
 		resultInput();
 	}
-	
+
 	private static void logIn() {
 		while (true) {
 			System.out.println("Input the password.");
@@ -86,12 +86,17 @@ public class MainProgram {
 						System.out.println(score);
 					}
 				}
+				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");
+				String choice = scan.nextLine();
+				if (choice.equalsIgnoreCase("Scoreboard")) {
+					ConsoleOutput.printResultTable(scoreboard);
+				}
 			}
 		} else if (mainEvent.equalsIgnoreCase("Heptathlon")) {
 			for (int i = 0; i < heptathlon.length; i++) {
 				for (int j = 0; j < scoreboard.size(); j++) {
-					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the " + heptathlon[i]
-							+ " event. Or write exit to stop the program.");
+					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the "
+							+ heptathlon[i] + " event. Or write exit to stop the program.");
 
 					String input = scan.nextLine();
 
@@ -104,6 +109,11 @@ public class MainProgram {
 						scoreboard.get(j).addSportEvent(heptathlon[i], score, result);
 						System.out.println(score);
 					}
+				}
+				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");
+				String choice = scan.nextLine();
+				if (choice.equalsIgnoreCase("Scoreboard")) {
+					ConsoleOutput.printResultTable(scoreboard);
 				}
 			}
 		}
