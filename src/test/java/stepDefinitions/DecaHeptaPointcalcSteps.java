@@ -1,8 +1,13 @@
 package stepDefinitions;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.cucumber.java.en.*;
 import sprint1.Contestant;
+import sprint1.ContestantSportEvent;
 import sprint1.ScoreCalculator;
 
 public class DecaHeptaPointcalcSteps {
@@ -16,7 +21,12 @@ public class DecaHeptaPointcalcSteps {
 	private String event;
 	private double result;
 	private ScoreCalculator calc = new ScoreCalculator();
-	private int[] scoreboard = new int[10];
+	private List<ContestantSportEvent> events = new ArrayList<>();
+	private static String[] decathlon = { "100 m", "Long jump", "Shot put", "High jump", "400 m", "110 m hurdles",
+			"Discus throw", "Pole vault", "Javelin throw", "1500 m" };
+	private static String[] heptathlon = { "100 m hurdles", "High jump", "Shot put", "200 m", "Long jump",
+			"Javelin throw", "800 m" };
+	private List<Double> results = new ArrayList<>();
 
 	// HeptaDeca Feature
 	@Given("I am at the menu for inputting a contestant")
@@ -67,24 +77,46 @@ public class DecaHeptaPointcalcSteps {
 		assertEquals(score, calc.eventScoreCalculation(combinedEvent, event, result));
 	}
 
-	@Given("the contestants scores are [{int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}, {int}]")
-	public void the_contestants_scores_are(int int1, int int2, int int3, int int4, int int5, int int6, int int7,
-			int int8, int int9, int int10) {
-		scoreboard[0] = int1;
-		scoreboard[1] = int2;
-		scoreboard[2] = int3;
-		scoreboard[3] = int4;
-		scoreboard[4] = int5;
-		scoreboard[5] = int6;
-		scoreboard[6] = int7;
-		scoreboard[7] = int8;
-		scoreboard[8] = int9;
-		scoreboard[9] = int10;
+	@Given("the contestants results are [{double}, {double}, {double}, {double}, {double}, {double}, {double}, {double}, {double}, {double}]")
+	public void the_contestants_results_are(double double1, double double2, double double3, double double4,
+			double double5, double double6, double double7, double double8, double double9, double double10) {
+		results.add(double1);
+		results.add(double2);
+		results.add(double3);
+		results.add(double4);
+		results.add(double5);
+		results.add(double6);
+		results.add(double7);
+		results.add(double8);
+		results.add(double9);
+		results.add(double10);
+
+		for (int i = 0; i < results.size(); i++) {
+			events.add(new ContestantSportEvent(decathlon[i], results.get(i),
+					calc.eventScoreCalculation(combinedEvent, decathlon[i], results.get(i))));
+		}
+	}
+
+	@Given("the contestants results are [{double}, {double}, {double}, {double}, {double}, {double}, {double}]")
+	public void the_contestants_results_are(Double double1, Double double2, Double double3, Double double4,
+			Double double5, Double double6, Double double7) {
+		results.add(double1);
+		results.add(double2);
+		results.add(double3);
+		results.add(double4);
+		results.add(double5);
+		results.add(double6);
+		results.add(double7);
+
+		for (int i = 0; i < results.size(); i++) {
+			events.add(new ContestantSportEvent(heptathlon[i], results.get(i),
+					calc.eventScoreCalculation(combinedEvent, heptathlon[i], results.get(i))));
+		}
 	}
 
 	@Then("the {int} is calculated and it is returned")
 	public void the_is_calculated_and_it_is_returned(int totalScore) {
-		assertEquals(totalScore, calc.totalScoreCalculation(scoreboard));
+		assertEquals(totalScore, calc.totalScoreCalculation(events));
 	}
 
 }

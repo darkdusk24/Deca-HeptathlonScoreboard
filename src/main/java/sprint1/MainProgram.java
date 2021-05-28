@@ -83,7 +83,6 @@ public class MainProgram {
 						double result = Double.valueOf(input);
 						int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
 						scoreboard.get(j).addSportEvent(decathlon[i], score, result);
-						System.out.println(score);
 					}
 				}
 				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");
@@ -107,7 +106,6 @@ public class MainProgram {
 						double result = Double.valueOf(input);
 						int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
 						scoreboard.get(j).addSportEvent(heptathlon[i], score, result);
-						System.out.println(score);
 					}
 				}
 				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");

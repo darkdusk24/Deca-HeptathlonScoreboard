@@ -14,12 +14,14 @@ Examples:
 |	 "Heptathlon"| "Long jump"|				700.0| 1172|
 |	 "Heptathlon"|		 "200 m"|				 23.0| 1079|
 
-
-Scenario Outline: Total score
-Given the contestants scores are <eventscores>
+@mytag
+Scenario Outline: Total score Decathlon
+Given the main event is a <combinedEvent>
+Given the contestants results are <eventscores>
 Then the <totalscore> is calculated and it is returned
 
 Examples:
-|																				  eventscores|totalscore|
-|							 [900, 1200, 1500, 0, 0, 0, 0, 0, 0, 0]|		  3600|
-|[800, 1300, 1550, 567, 658, 500, 600, 600, 300, 700]|			7575|
+|combinedEvent|																									   eventscores|totalscore|
+|  "Decathlon"|			[11.0, 685.0, 14.6, 0.0, 82.0, 28.5, 0.0, 0.0, 0.0, 480.0]|		   2404|
+|  "Decathlon"|[10.0, 694.0, 15.6, 210.0, 50.30, 15.2, 49.3, 493, 69.5, 245.0]|			 8788|
+| "Heptathlon"|											 [10.0, 210.0, 0.0, 42.5, 0.0, 0.0, 254.0]|			 2990|
