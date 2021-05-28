@@ -1,5 +1,7 @@
 package sprint1;
 
+import java.util.List;
+
 public class ScoreCalculator {
 
 	public int eventScoreCalculation(String combinedEvent, String event, double result) {
@@ -66,11 +68,11 @@ public class ScoreCalculator {
 		return score;
 	}
 	
-	public int totalScoreCalculation(int[] scores) {
+	public int totalScoreCalculation(List<ContestantSportEvent> events) {
 		int totalScore = 0;
 		
-		for(int i = 0; i < scores.length; i++) {
-			totalScore += scores[i];
+		for (int i = 0; i < events.size(); i++) {
+			totalScore += events.get(i).getScore();
 		}
 		
 		return totalScore;

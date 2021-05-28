@@ -10,6 +10,7 @@ public class Contestant {
 	private int place;
 	private String country;
 	private List<ContestantSportEvent> sportEvents = new ArrayList<>();
+	private ScoreCalculator calc = new ScoreCalculator();
 	
 	public Contestant(String name, int number, String country) {
 		this.name = name;
@@ -65,7 +66,7 @@ public class Contestant {
 		int totalScore = 0;
 		for (ContestantSportEvent sportEvent : getSportEvents()) {
 			scores += sportEvent.toString();
-			totalScore += sportEvent.getScore();
+			totalScore = calc.totalScoreCalculation(sportEvents);
 		}
 		return name + "(" + number + ") " + country + ": " + scores + " Total Score: " + totalScore;
 	}
