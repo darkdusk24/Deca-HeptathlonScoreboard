@@ -19,7 +19,7 @@ public class MainProgram {
 	private static String[] heptathlon = { "100 m hurdles", "High jump", "Shot put", "200 m", "Long jump",
 			"Javelin throw", "800 m" };
 	public static ScoreCalculator calc = new ScoreCalculator();
-	private static String mainEvent = "Heptathlon";
+	private static String mainEvent = "Decathlon";
 	public static Excel excel;
 	
 	public static void main(String[] args) throws IOException, InvalidFormatException  {
@@ -29,7 +29,7 @@ public class MainProgram {
 	//Create Excel File and the methods from excel class
 	excel = new Excel("Deca-HeptathlonScoreboard");
 	excel.DecaColumnA();
-	//excel.DecaColumnBtoC();
+	excel.DecaColumnBtoC(scoreboard);
 	excel.HeptaColumnA();
 	excel.HeptaColumnBtoC(scoreboard);
 	excel.write();

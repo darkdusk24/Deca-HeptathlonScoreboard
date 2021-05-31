@@ -39,6 +39,7 @@ public class Excel {
 		sh = workbook.createSheet("Decathlon");
 		sh2 = workbook.createSheet("Heptathlon");
 	}
+	
 	public void DecaColumnA() throws IOException{ 
 	// Values for Column A for Decathlon
 	Object columnA[][] = { { "Name" }, 
@@ -86,43 +87,66 @@ public class Excel {
 		sh.autoSizeColumn(i);
 	}
 	}
-	public void DecaColumnBtoC()throws IOException {
-	// Values for Column B and C for Decathlon
-	Object columnB[][] = { { "Calvin Hall" }, 
-						   { "USA" }, 
-						   { "100" }, 
-						   { "RESULT", "SCORE" },
-						   { CoSpEv.getResult(), CoSpEv.getScore()  }, 
-						   { "E2 Result", "E2 Score" },
-						   { "E3 Result", "E3 Score" }, 
-						   { "E4 Result", "E4 Score" },
-						   { "E5 Result", "E5 Score" }, 
-						   { "D1 TOTAL" }, 
-						   { "D1 PLACE" }, 
-						   { "E6 Result", "E6 Score" },
-						   { "E7 Result", "E7 Score" },
-						   { "E8 Result", "E8 Score" },
-						   { "E9 Result", "E9 Score" },
-						   { "E10 Result", "E10 Score" },
-						   { "TOTAL POINTS" },
-						   { "TOTAL PLACE" },
-						   };
+	
+	public void DecaColumnBtoC(List<Contestant> cont)throws IOException {
+		int column = 1;
+		
+		for(int i =0; i<cont.size(); i++) {
+		Contestant output = cont.get(i);
+		List<ContestantSportEvent> temp = output.getSportEvents();
+		
+		// Values for Column B and C for Decathlon
+		Object columnB[][] = { { output.getName() }, 
+						   	   { output.getCountry() }, 
+						   	   { output.getNumber() }, 
+						   	   { "RESULT", "SCORE" },
+						   	   { temp.get(0).getResult(), temp.get(0).getScore() },
+						   	   { temp.get(1).getResult(), temp.get(1).getScore() },
+						   	   { temp.get(2).getResult(), temp.get(2).getScore() },
+						   	   { temp.get(3).getResult(), temp.get(3).getScore() },
+						   	   { temp.get(4).getResult(), temp.get(4).getScore() },
+						   	   { "D1 TOTAL" }, 
+						   	   { "D1 PLACE" }, 
+						   	   { temp.get(5).getResult(), temp.get(5).getScore() },
+						   	   { temp.get(6).getResult(), temp.get(6).getScore() },
+						   	   { temp.get(7).getResult(), temp.get(7).getScore() },
+						   	   { temp.get(8).getResult(), temp.get(8).getScore() },
+						   	   { temp.get(9).getResult(), temp.get(9).getScore() },
+						   	   { "TOTAL POINTS" },
+						   	   { "TOTAL PLACE" },
+						   	   };
+		
 	// Create Row and Column B for Decathlon
 	int rowCount1 = 0;
 	for (Object emp1[] : columnB) {
-		row1 = sh.getRow(rowCount1++);
-		int columnCount1 = 1;
+		row1 = sh.getRow(rowCount1);
+		int check = 0;
 		for (Object value1 : emp1) {
-			cell1 = row1.createCell(columnCount1++);
-			if (value1 instanceof String)
-				cell1.setCellValue((String) value1);
-			if (value1 instanceof Integer)
-				cell1.setCellValue((Integer) value1);
-			if (value1 instanceof Boolean)
-				cell1.setCellValue((Boolean) value1);
-			CellUtil.setAlignment(cell1, HorizontalAlignment.CENTER);
+			if(check==0) {
+				cell1 = row1.createCell(column);
+				System.out.println(rowCount1);
+				if (rowCount1==4 || rowCount1==5 || rowCount1==6 || rowCount1==7 || rowCount1==8 || rowCount1==11 || rowCount1==12 || rowCount1==13 || rowCount1==14 || rowCount1==15) {
+					cell1.setCellValue((double) value1); 
+				} else if (rowCount1==2) {
+					cell1.setCellValue((Integer) value1);
+				} else { 
+					cell1.setCellValue((String) value1);
+				}
+				CellUtil.setAlignment(cell1, HorizontalAlignment.CENTER);
+				check++;
+			} else if(check == 1) {
+				cell1 = row1.createCell((column+1));
+				if(rowCount1==3) {
+					cell1.setCellValue((String) value1);
+				} else {
+					cell1.setCellValue((int) value1);
+				}
+				CellUtil.setAlignment(cell1, HorizontalAlignment.CENTER);
+			}
 		}
+		rowCount1++;
 	}
+	
 	// Make the row 4 to "bold text" in Decathlon
 	cellStyle1 = workbook.createCellStyle();
 	font = workbook.createFont();
@@ -131,7 +155,7 @@ public class Excel {
 	row1 = sh.getRow(3);
 	cell1 = row1.getCell(0);
 	cell1.setCellStyle(cellStyle1);
-	for (int j = 0; j <= 3; j++)
+	for (int j = 0; j <= 2; j++)
 		row1.getCell(j).setCellStyle(cellStyle1);
 	// Merge cells on row 1,2,3,10,11,17,18 Column B and C in Decathlon
 	sh.addMergedRegion(new CellRangeAddress(0, 0, 1, 2));
@@ -141,11 +165,13 @@ public class Excel {
 	sh.addMergedRegion(new CellRangeAddress(10, 10, 1, 2));
 	sh.addMergedRegion(new CellRangeAddress(16, 16, 1, 2));
 	sh.addMergedRegion(new CellRangeAddress(17, 17, 1, 2));
+	column++;
+	}
 	// Autosize Decathlon-columns
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < 81; i++) {
 		sh.autoSizeColumn(i);
 	}
-	}
+}
 //-----------------------------------------------------------------------------------------
 	public void HeptaColumnA()throws IOException { 
 	// Values for Column A for Heptathlon
@@ -196,13 +222,9 @@ public class Excel {
 		
 		for(int i =0; i<cont.size(); i++) {
 		Contestant output = cont.get(i);
-		
-	
-		
-		
 		List<ContestantSportEvent> temp = output.getSportEvents();
-		// Values for Column B and C for Heptathlon
 		
+		// Values for Column B and C for Heptathlon
 	Object columnB1[][] = { { output.getName() }, 
 							{ output.getCountry() }, 
 							{ output.getNumber() }, 
@@ -269,7 +291,7 @@ public class Excel {
 	sh2.addMergedRegion(new CellRangeAddress(13, 13, 1, 2));
 	sh2.addMergedRegion(new CellRangeAddress(14, 14, 1, 2));
 	column++;
-		}
+	}
 	// Autosize Heptathlon-columns
 	for (int i = 0; i < 81; i++) {
 		sh2.autoSizeColumn(i);
