@@ -5,8 +5,9 @@ import java.util.*;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+//import org.apache.poi.ss.usermodel.*;
+
+//import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class MainProgram {
 
@@ -15,21 +16,22 @@ public class MainProgram {
 	public static List<Contestant> scoreboard = new ArrayList<>();
 	private static String[] decathlon = { "100 m", "Long jump", "Shot put", "High jump", "400 m", "110 m hurdles",
 			"Discus throw", "Pole vault", "Javelin throw", "1500 m" };
-	private static String[] heptathlon = { "1. 100 m hurdles", "2. High jump", "3. Shot put", "4. 200 m", "5. Long jump",
-			"6. Javelin throw", "7. 800 m" };
+	private static String[] heptathlon = { "100 m hurdles", "High jump", "Shot put", "200 m", "Long jump",
+			"Javelin throw", "800 m" };
 	public static ScoreCalculator calc = new ScoreCalculator();
 	private static String mainEvent = "Heptathlon";
-
+	public static Excel excel;
+	
 	public static void main(String[] args) throws IOException, InvalidFormatException  {
 		logIn();
 		contestantInput();
 		resultInput();
 	//Create Excel File and the methods from excel class
-	Excel excel = new Excel("Deca-HeptathlonScoreboard");
+	excel = new Excel("Deca-HeptathlonScoreboard");
 	excel.DecaColumnA();
-	excel.DecaColumnBtoD();
+	//excel.DecaColumnBtoC();
 	excel.HeptaColumnA();
-	excel.HeptaColumnBtoD();
+	excel.HeptaColumnBtoC(scoreboard);
 	excel.write();
 	System.out.println("Excel-file is Completed");	
 	}
@@ -128,4 +130,4 @@ public class MainProgram {
 			}
 		}
 	}
-}
+}			
