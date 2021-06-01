@@ -12,10 +12,6 @@ public class ContestantSportEvent {
 		this.result = result;
 	}
 	
-	public ContestantSportEvent() {
-		super();
-	}
-
 	public Double getResult() {
 		return result;
 	}
@@ -32,4 +28,5 @@ public class ContestantSportEvent {
 	public String toString() {
 		return sportEvent + ": score=" + score + ", result=" + result + "; ";
 	}
+
 }

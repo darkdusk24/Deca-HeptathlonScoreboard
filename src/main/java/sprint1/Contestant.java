@@ -19,10 +19,6 @@ public class Contestant {
 		this.country = country;
 	}
 
-	public Contestant() {
-		super();
-	}
-
 	public void setName(String string) {
 		name = string;
 
@@ -89,6 +85,5 @@ public class Contestant {
 		}
 		return name + "(" + number + ") " + country + ": " + scores + " Total Score: " + totalScore;
 	}
-	
-	
+  
 }

@@ -14,3 +14,4 @@ public class ConsoleOutput {
 		System.out.println("###########################################################");
 	}
 }
+

@@ -40,7 +40,7 @@ public class MainProgram {
 		}
 	}
 
-	public static void contestantInput() {
+	private static void contestantInput() {
 		int contestants = 0;
 
 		while (true) {
@@ -60,6 +60,7 @@ public class MainProgram {
 
 				Contestant competitor = new Contestant(name, number, country);
 				scoreboard.add(competitor);
+
 				if (mainEvent.equalsIgnoreCase("Decathlon")) {
 					excel.decaContestantRegistration(competitor);
 				} else if (mainEvent.equalsIgnoreCase("Heptathlon")) {
