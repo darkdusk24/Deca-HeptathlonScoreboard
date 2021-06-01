@@ -13,6 +13,7 @@ public class Contestant {
 	private ScoreCalculator calc = new ScoreCalculator();
 	
 	public Contestant(String name, int number, String country) {
+		super();
 		this.name = name;
 		this.number = number;
 		this.country = country;
@@ -47,6 +48,20 @@ public class Contestant {
 		ContestantSportEvent event = new ContestantSportEvent(sportEvent, result, score);
 		this.sportEvents.add(event);
 	}
+	
+	public ContestantSportEvent getSportEvent(String event) {
+		int num = 0;
+		
+		while(num < sportEvents.size()) {
+			if(sportEvents.get(num).getSportEvent().equalsIgnoreCase(event)) {
+				break;
+			} else {
+				num++;
+			}
+		}
+		
+		return sportEvents.get(num);
+	}
 
 	public List<ContestantSportEvent> getSportEvents() {
 		return sportEvents;
@@ -70,6 +85,5 @@ public class Contestant {
 		}
 		return name + "(" + number + ") " + country + ": " + scores + " Total Score: " + totalScore;
 	}
-	
-	
+  
 }

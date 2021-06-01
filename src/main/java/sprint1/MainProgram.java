@@ -1,20 +1,25 @@
 package sprint1;
 
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 import java.util.List;
 import java.util.Scanner;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class MainProgram {
 
 	private static Scanner scan = new Scanner(System.in);
 	private static PasswordHandler pass = new PasswordHandler();
-	private static List<Contestant> scoreboard = new ArrayList<>();
+	public static List<Contestant> scoreboard = new ArrayList<>();
 	private static String[] decathlon = { "100 m", "Long jump", "Shot put", "High jump", "400 m", "110 m hurdles",
 			"Discus throw", "Pole vault", "Javelin throw", "1500 m" };
-	private static String[] heptathlon = { "100 m hurdles", "High jump", "Shot put", "200 m", "Long jump",
-			"Javelin throw", "800 m" };
-	private static ScoreCalculator calc = new ScoreCalculator();
+	private static String[] heptathlon = { "100 m hurdles", "High jump", "Shot put", "200 m",
+			"Long jump", "Javelin throw", "800 m" };
+	public static ScoreCalculator calc = new ScoreCalculator();
 	private static String mainEvent = "Heptathlon";
+	private static Excel excel = new Excel("Deca-HeptathlonScoreboard");;
 
 	public static void main(String[] args) {
 		logIn();
@@ -55,6 +60,12 @@ public class MainProgram {
 
 				Contestant competitor = new Contestant(name, number, country);
 				scoreboard.add(competitor);
+
+				if (mainEvent.equalsIgnoreCase("Decathlon")) {
+					excel.decaContestantRegistration(competitor);
+				} else if (mainEvent.equalsIgnoreCase("Heptathlon")) {
+					excel.heptaContestantRegistration(competitor);
+				}
 			} else {
 				break;
 			}
@@ -83,6 +94,8 @@ public class MainProgram {
 						double result = Double.valueOf(input);
 						int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
 						scoreboard.get(j).addSportEvent(decathlon[i], score, result);
+						excel.setDecaContestantEventResultAndScore(scoreboard.get(j), decathlon[i]);
+						excel.setContestantsTotalScore(scoreboard.get(j), "Decathlon");
 					}
 				}
 				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");
@@ -106,6 +119,8 @@ public class MainProgram {
 						double result = Double.valueOf(input);
 						int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
 						scoreboard.get(j).addSportEvent(heptathlon[i], score, result);
+						excel.setHeptaContestantEventResultAndScore(scoreboard.get(j), heptathlon[i]);
+						excel.setContestantsTotalScore(scoreboard.get(j), "Heptathlon");
 					}
 				}
 				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");
@@ -116,5 +131,4 @@ public class MainProgram {
 			}
 		}
 	}
-
 }

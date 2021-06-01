@@ -6,6 +6,7 @@ public class ContestantSportEvent {
 	private Double result;
 	
 	public ContestantSportEvent(String sportEvent, Double result, int score) {
+		super();
 		this.sportEvent = sportEvent;
 		this.score = score;
 		this.result = result;
@@ -27,6 +28,5 @@ public class ContestantSportEvent {
 	public String toString() {
 		return sportEvent + ": score=" + score + ", result=" + result + "; ";
 	}
-	
-	
+
 }
