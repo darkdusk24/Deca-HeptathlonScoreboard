@@ -52,6 +52,20 @@ public class Contestant {
 		ContestantSportEvent event = new ContestantSportEvent(sportEvent, result, score);
 		this.sportEvents.add(event);
 	}
+	
+	public ContestantSportEvent getSportEvent(String event) {
+		int num = 0;
+		
+		while(num < sportEvents.size()) {
+			if(sportEvents.get(num).getSportEvent().equalsIgnoreCase(event)) {
+				break;
+			} else {
+				num++;
+			}
+		}
+		
+		return sportEvents.get(num);
+	}
 
 	public List<ContestantSportEvent> getSportEvents() {
 		return sportEvents;

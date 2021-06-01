@@ -12,47 +12,47 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Excel {
 	
-		MainProgram mains = new MainProgram();
-		CompetitorsScore score = new CompetitorsScore();
-		Contestant cont = new Contestant();
-		ContestantSportEvent CoSpEv = new ContestantSportEvent();
 		ScoreCalculator calc = new ScoreCalculator();
 		Workbook workbook;
 		Cell cell, cell1;
 		Row row, row1;
-		CellStyle cellStyle, cellStyle1;
+		CellStyle cellStyle;
 		Font font;
 		Sheet sh, sh2;
 		private String excelName;
+		boolean totalScoreMerge = true;
 		
-		Excel(String name) throws IOException{
+		Excel(String name) {
 		// Create workbook in .xls format
 		workbook = new HSSFWorkbook();
 		excelName = name;
 		// For .xslx workbooks use XSSFWoorkbok();
 		// Create Sheets
-				sh = workbook.createSheet("Decathlon");
-				sh2 = workbook.createSheet("Heptathlon");
+		this.sh = workbook.createSheet("Decathlon");
+		this.sh2 = workbook.createSheet("Heptathlon");
+		decaColumnA();
+		heptaColumnA();
+		write();
 		}
 		
-		public void DecaColumnA() throws IOException{ 
+		public void decaColumnA() { 
 		// Values for Column A for Decathlon
 		Object columnA[][] = { { "Name" }, 
 							   { "Number" }, 
 							   { "Country" }, 
 							   { "" }, 
-							   { "1. 100 metres" }, 
-							   { "2. Long jump" },
-							   { "3. Shot put" }, 
-							   { "4. High jump" }, 
-							   { "5. 400 metres" }, 
+							   { "100 m" }, 
+							   { "Long jump" },
+							   { "Shot put" }, 
+							   { "High jump" }, 
+							   { "400 m" }, 
 							   { "DAY 1 TOTAL" }, 
 							   { "DAY 1 PLACE" },
-							   { "6. 110 metres hurdles" },
+							   { "6. 110 m hurdles" },
 							   { "7. Discus throw" },
 							   { "8. Pole vault" },
 							   { "9. Javelin throw" },
-							   { "10. 1500 metres" },
+							   { "10. 1500 m" },
 							   { "TOTAL POINTS" },
 							   { "TOTAL PLACE" },
 							   };
@@ -78,82 +78,166 @@ public class Excel {
 			}
 		}
 		}
-		public void DecaColumnBtoD()throws IOException {
-		// Values for Column B for Decathlon
-		Object columnB[][] = { { "Calvin hall" }, 
-							   { 100 }, 
-							   { "USA" }, 
-							   { "RESULT", "SCORE", "PLACE" },
-							   { "E1 Result", "E1 Score", "E1 Place" }, 
-							   { "E2 Result", "E2 Score", "E2 Place" },
-							   { "E3 Result", "E3 Score", "E3 Place" }, 
-							   { "E4 Result", "E4 Score", "E4 Place" },
-							   { "E5 Result", "E5 Score", "E5 Place" }, 
-							   { "D1 TOTAL" }, 
-							   { "D1 PLACE" }, 
-							   { "E6 Result", "E6 Score", "E6 Place" },
-							   { "E7 Result", "E7 Score", "E7 Place" },
-							   { "E8 Result", "E8 Score", "E8 Place" },
-							   { "E9 Result", "E9 Score", "E9 Place" },
-							   { "E10 Result", "E10 Score", "E10 Place" },
-							   { "TOTAL POINTS" },
-							   { "TOTAL PLACE" },
-							   };
-		// Create Row and Column B for Decathlon
-		int rowCount1 = 0;
-		for (Object emp1[] : columnB) {
-			row1 = sh.getRow(rowCount1++);
-			int columnCount1 = 1;
-			for (Object value1 : emp1) {
-				cell1 = row1.createCell(columnCount1++);
-				if (value1 instanceof String)
-					cell1.setCellValue((String) value1);
-				if (value1 instanceof Integer)
-					cell1.setCellValue((Integer) value1);
-				if (value1 instanceof Boolean)
-					cell1.setCellValue((Boolean) value1);
-				CellUtil.setAlignment(cell1, HorizontalAlignment.CENTER);
+		
+		public void decaContestantRegistration(Contestant cont) {
+			int column = 0;
+			while(true) {
+				Row checkRow = sh.getRow(0);
+				if(checkRow.getCell(column) == null) {
+					break;
+				} else {
+					column++;
+				}
+			}
+			
+			Cell name = sh.getRow(0).createCell(column);
+			CellUtil.setAlignment(name, HorizontalAlignment.CENTER);
+			Cell number = sh.getRow(1).createCell(column);
+			CellUtil.setAlignment(number, HorizontalAlignment.CENTER);
+			Cell country = sh.getRow(2).createCell(column);
+			CellUtil.setAlignment(country, HorizontalAlignment.CENTER);
+			int mergedColumnEnd = column + 1;
+			
+			Cell nameSecondColumn = sh.getRow(0).createCell(mergedColumnEnd);
+			nameSecondColumn.setCellValue("");
+			
+			name.setCellValue(cont.getName());
+			number.setCellValue(cont.getNumber());
+			country.setCellValue(cont.getCountry());
+			
+			sh.addMergedRegion(new CellRangeAddress(0, 0, column, mergedColumnEnd));
+			sh.addMergedRegion(new CellRangeAddress(1, 1, column, mergedColumnEnd));
+			sh.addMergedRegion(new CellRangeAddress(2, 2, column, mergedColumnEnd));
+			
+			
+			//Creating the cells for Result and Score text
+			cellStyle = workbook.createCellStyle();
+			font = workbook.createFont();
+			font.setBold(true);
+			cellStyle.setFont(font);
+			
+			Row resultScore = sh.getRow(3);
+			Cell result = resultScore.createCell(column);
+			result.setCellValue("Result");
+			result.setCellStyle(cellStyle);
+			Cell score = resultScore.createCell(mergedColumnEnd);
+			score.setCellValue("Score");
+			score.setCellStyle(cellStyle);
+			for (int i = 0; i < 16; i++) {
+				sh.autoSizeColumn(i);
+			}
+			
+			write();
+		}
+		
+		public void heptaContestantRegistration(Contestant cont) {
+			int column = 0;
+			while(true) {
+				Row checkRow = sh2.getRow(0);
+				if(checkRow.getCell(column) == null) {
+					break;
+				} else {
+					column++;
+				}
+			}
+			
+			Cell name = sh2.getRow(0).createCell(column);
+			CellUtil.setAlignment(name, HorizontalAlignment.CENTER);
+			Cell number = sh2.getRow(1).createCell(column);
+			CellUtil.setAlignment(number, HorizontalAlignment.CENTER);
+			Cell country = sh2.getRow(2).createCell(column);
+			CellUtil.setAlignment(country, HorizontalAlignment.CENTER);
+			int mergedColumnEnd = column + 1;
+			
+			Cell nameSecondColumn = sh2.getRow(0).createCell(mergedColumnEnd);
+			nameSecondColumn.setCellValue("");
+			
+			name.setCellValue(cont.getName());
+			number.setCellValue(cont.getNumber());
+			country.setCellValue(cont.getCountry());
+			
+			sh2.addMergedRegion(new CellRangeAddress(0, 0, column, mergedColumnEnd));
+			sh2.addMergedRegion(new CellRangeAddress(1, 1, column, mergedColumnEnd));
+			sh2.addMergedRegion(new CellRangeAddress(2, 2, column, mergedColumnEnd));
+			
+			
+			//Creating the cells for Result and Score text
+			cellStyle = workbook.createCellStyle();
+			font = workbook.createFont();
+			font.setBold(true);
+			cellStyle.setFont(font);
+			
+			Row resultScore = sh2.getRow(3);
+			Cell result = resultScore.createCell(column);
+			result.setCellValue("Result");
+			result.setCellStyle(cellStyle);
+			Cell score = resultScore.createCell(mergedColumnEnd);
+			score.setCellValue("Score");
+			score.setCellStyle(cellStyle);
+			for (int i = 0; i < 16; i++) {
+				sh2.autoSizeColumn(i);
+			}
+			
+			write();
+		}
+		
+		public void setDecaContestantEventResultAndScore(Contestant cont, String event) {
+		int row = 4;
+		int column = 0;
+		
+		while(true) {
+			Row checkRow = sh.getRow(row);
+			if(checkRow.getCell(0).getStringCellValue().equalsIgnoreCase(event)) {
+				break;
+			} else {
+				row++;
 			}
 		}
-		// Make the row 4 to "bold text" in Decathlon
-		cellStyle1 = workbook.createCellStyle();
-		font = workbook.createFont();
-		font.setBold(true);
-		cellStyle1.setFont(font);
-		row1 = sh.getRow(3);
-		cell1 = row1.getCell(0);
-		cell1.setCellStyle(cellStyle1);
-		for (int j = 0; j <= 3; j++)
-			row1.getCell(j).setCellStyle(cellStyle1);
-		// Merge cells on row 1,2,3,10,11,17,18 Column B, C and D in Decathlon
-		sh.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
-		sh.addMergedRegion(new CellRangeAddress(1, 1, 1, 3));
-		sh.addMergedRegion(new CellRangeAddress(2, 2, 1, 3));
-		sh.addMergedRegion(new CellRangeAddress(9, 9, 1, 3));
-		sh.addMergedRegion(new CellRangeAddress(10, 10, 1, 3));
-		sh.addMergedRegion(new CellRangeAddress(16, 16, 1, 3));
-		sh.addMergedRegion(new CellRangeAddress(17, 17, 1, 3));
-		// Autosize Decathlon-columns
-		for (int i = 0; i < 16; i++) {
+		
+		while(true) {
+			Row checkNameRow = sh.getRow(0);
+			if(checkNameRow.getCell(column).getStringCellValue().equalsIgnoreCase(cont.getName())) {
+				break;
+			} else {
+				column++;
+			}
+		}
+		
+		Row assign = sh.getRow(row);
+		Cell result = assign.createCell(column);
+		CellUtil.setAlignment(result, HorizontalAlignment.CENTER);
+		Cell score = assign.createCell((column + 1));
+		CellUtil.setAlignment(score, HorizontalAlignment.CENTER);
+		ContestantSportEvent temp = cont.getSportEvent(event);
+		result.setCellValue(temp.getResult());
+		score.setCellValue(temp.getScore());
+		// Autosize Decathlon-Columns
+		for (int i = 0; i < 81; i++) {
 			sh.autoSizeColumn(i);
 		}
+		
+		write();
+		// Merge cells on row 1,2,3,10,11,17,18 Column B, C and D in Decathlon
+//      sh.addMergedRegion(new CellRangeAddress(9, 9, 1, 3));
+//		sh.addMergedRegion(new CellRangeAddress(10, 10, 1, 3));
+//		sh.addMergedRegion(new CellRangeAddress(17, 17, 1, 3));
 		}
-//-----------------------------------------------------------------------------------------
-		public void HeptaColumnA()throws IOException { 
+		
+		public void heptaColumnA() { 
 		// Values for Column A for Heptathlon
 		Object columnA1[][] = { { "Name"}, 
 								{ "Number" }, 
 								{ "Country" }, 
 								{ "" }, 
-								{ "1. 100 metres hurdles" },
-								{ "2. High jump" }, 
-								{ "3. Shot put" }, 
-								{ "4. 200 metres" }, 
+								{ "100 m hurdles" },
+								{ "High jump" }, 
+								{ "Shot put" }, 
+								{ "200 m" }, 
 								{ "DAY 1 TOTAL" }, 
 								{ "DAY 1 PLACE" },
-								{ "5. Long jump" }, 
-								{ "6. Javelin throw" }, 
-								{ "7. 800 metres" },
+								{ "Long jump" }, 
+								{ "Javelin throw" }, 
+								{ "800 m" },
 								{ "TOTAL POINTS" },
 								{ "TOTAL PLACE" },
 								};
@@ -179,71 +263,103 @@ public class Excel {
 			}
 		}
 		}
-		public void HeptaColumnBtoD()throws IOException { 
-		// Values for Column B for Heptathlon
-		Object columnB1[][] = { { cont.getName() }, 
-								{ cont.getCountry() }, 
-								{ cont.getNumber() }, 
-								{ "RESULT", "SCORE", "PLACE" },
-								{ CoSpEv.getResult(), CoSpEv.getScore(), "E1 Place" }, 
-								{ CoSpEv.getResult(), CoSpEv.getScore(), "E2 Place" },
-								{ CoSpEv.getResult(), CoSpEv.getScore(), "E3 Place" }, 
-								{ CoSpEv.getResult(), CoSpEv.getScore(), "E4 Place" }, 
-								{ "D1 TOTAL" },
-								{ "D1 PLACE" },
-								{ CoSpEv.getResult(), CoSpEv.getScore(), "E5 Place" }, 
-								{ CoSpEv.getResult(), CoSpEv.getScore(), "E6 Place" },
-								{ CoSpEv.getResult(), CoSpEv.getScore(), "E7 Place" }, 
-								{ "TOTAL POINTS" },
-								{ "TOTAL PLACE" },
-		};
-		// Create Row and Column B for Heptathlon
-		int rowCount01 = 0;
-		for (Object emp1[] : columnB1) {
-			row1 = sh2.getRow(rowCount01++);
-			int columnCount1 = 1;
-			for (Object value1 : emp1) {
-				cell1 = row1.createCell(columnCount1++);
-				if (value1 instanceof String)
-					cell1.setCellValue((String) value1);
-				if (value1 instanceof Integer)
-					cell1.setCellValue((Integer) value1);
-				if (value1 instanceof Boolean)
-					cell1.setCellValue((Boolean) value1);
-				CellUtil.setAlignment(cell1, HorizontalAlignment.CENTER);
+		
+		public void setHeptaContestantEventResultAndScore(Contestant cont, String event) {
+			int row = 4;
+			int column = 0;
+			
+			while(true) {
+				Row checkRow = sh2.getRow(row);
+				if(checkRow.getCell(0).getStringCellValue().equalsIgnoreCase(event)) {
+					break;
+				} else {
+					row++;
+				}
+			}
+			
+			while(true) {
+				Row checkNameRow = sh2.getRow(0);
+				if(checkNameRow.getCell(column).getStringCellValue().equalsIgnoreCase(cont.getName())) {
+					break;
+				} else {
+					column++;
+				}
+			}
+			
+			Row assign = sh2.getRow(row);
+			Cell result = assign.createCell(column);
+			CellUtil.setAlignment(result, HorizontalAlignment.CENTER);
+			Cell score = assign.createCell((column + 1));
+			CellUtil.setAlignment(score, HorizontalAlignment.CENTER);
+			ContestantSportEvent temp = cont.getSportEvent(event);
+			result.setCellValue(temp.getResult());
+			score.setCellValue(temp.getScore());
+			
+			// Autosize Heptathlon-columns
+			for (int i = 0; i < 81; i++) {
+				sh2.autoSizeColumn(i);
+				}
+			
+			write();
+			// Merge cells on row 1,2,3,9,10,15,16 Column B, C and D in Heptathlon
+//			sh2.addMergedRegion(new CellRangeAddress(8, 8, 1, 3));
+//			sh2.addMergedRegion(new CellRangeAddress(9, 9, 1, 3));
+//			sh2.addMergedRegion(new CellRangeAddress(13, 13, 1, 3));
+//			sh2.addMergedRegion(new CellRangeAddress(14, 14, 1, 3));
+		}
+		
+		public void setContestantsTotalScore(Contestant cont, String mainEvent) {
+			int column = 0;
+			
+			while(true) {
+				if(mainEvent.equalsIgnoreCase("Decathlon")) {
+					Row checkNameRow = sh.getRow(0);
+					if(checkNameRow.getCell(column).getStringCellValue().equalsIgnoreCase(cont.getName())) {
+						break;
+					} else {
+						column++;
+					}
+				} else if(mainEvent.equalsIgnoreCase("Heptathlon")) {
+					Row checkNameRow = sh2.getRow(0);
+					if(checkNameRow.getCell(column).getStringCellValue().equalsIgnoreCase(cont.getName())) {
+						break;
+					} else {
+						column++;
+					}
+				}
+			}
+			int mergedColumnEnd = column + 1;
+			
+			if(mainEvent.equalsIgnoreCase("Decathlon")) {
+				Row totalScoreRow = sh.getRow(16);
+				Cell totalScore = totalScoreRow.createCell(column);
+				CellUtil.setAlignment(totalScore, HorizontalAlignment.CENTER);
+				totalScore.setCellValue(calc.totalScoreCalculation(cont.getSportEvents()));
+				if(totalScoreMerge) {
+					sh.addMergedRegion(new CellRangeAddress(16, 16, column, mergedColumnEnd));
+					this.totalScoreMerge = false;
+				}
+			} else if(mainEvent.equalsIgnoreCase("Heptathlon")) {
+				Row totalScoreRow = sh2.getRow(13);
+				Cell totalScore = totalScoreRow.createCell(column);
+				CellUtil.setAlignment(totalScore, HorizontalAlignment.CENTER);
+				totalScore.setCellValue(calc.totalScoreCalculation(cont.getSportEvents()));
+				if(totalScoreMerge) {
+					sh.addMergedRegion(new CellRangeAddress(13, 13, column, mergedColumnEnd));
+					this.totalScoreMerge = false;
+				}
+			}
+			
+			for (int i = 0; i < 81; i++) {
+				sh.autoSizeColumn(i);
 			}
 		}
 		
-		// Make the row 4 to "bold text" in Heptathlon
-		cellStyle1 = workbook.createCellStyle();
-		font = workbook.createFont();
-		font.setBold(true);
-		cellStyle1.setFont(font);
-		row1 = sh2.getRow(3);
-		cell1 = row1.getCell(0);
-		cell1.setCellStyle(cellStyle1);
-		for (int j = 0; j <= 3; j++)
-			row1.getCell(j).setCellStyle(cellStyle1);
-		// Merge cells on row 1,2,3,9,10,15,16 Column B, C and D in Heptathlon
-		sh2.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
-		sh2.addMergedRegion(new CellRangeAddress(1, 1, 1, 3));
-		sh2.addMergedRegion(new CellRangeAddress(2, 2, 1, 3));
-		sh2.addMergedRegion(new CellRangeAddress(8, 8, 1, 3));
-		sh2.addMergedRegion(new CellRangeAddress(9, 9, 1, 3));
-		sh2.addMergedRegion(new CellRangeAddress(13, 13, 1, 3));
-		sh2.addMergedRegion(new CellRangeAddress(14, 14, 1, 3));
-		// Autosize Heptathlon-columns
-		for (int i = 0; i < 16; i++) {
-			sh2.autoSizeColumn(i);
-			}
-		}
-		
-		public void write() throws IOException {
+		public void write() {
 			try {
 			FileOutputStream output = new FileOutputStream("src//main//java//" + excelName + ".xls");
 			workbook.write(output);
 			output.close();
-			workbook.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				}
