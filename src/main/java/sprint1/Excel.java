@@ -21,7 +21,6 @@ public class Excel {
 		Font font;
 		Sheet sh, sh2;
 		private String excelName;
-		boolean totalScoreMerge = true;
 		
 		Excel(String name) {
 		// Create workbook in .xls format
@@ -109,6 +108,7 @@ public class Excel {
 			sh.addMergedRegion(new CellRangeAddress(0, 0, column, mergedColumnEnd));
 			sh.addMergedRegion(new CellRangeAddress(1, 1, column, mergedColumnEnd));
 			sh.addMergedRegion(new CellRangeAddress(2, 2, column, mergedColumnEnd));
+			sh.addMergedRegion(new CellRangeAddress(16, 16, column, mergedColumnEnd));
 			
 			
 			//Creating the cells for Result and Score text
@@ -160,6 +160,7 @@ public class Excel {
 			sh2.addMergedRegion(new CellRangeAddress(0, 0, column, mergedColumnEnd));
 			sh2.addMergedRegion(new CellRangeAddress(1, 1, column, mergedColumnEnd));
 			sh2.addMergedRegion(new CellRangeAddress(2, 2, column, mergedColumnEnd));
+			sh2.addMergedRegion(new CellRangeAddress(13, 13, column, mergedColumnEnd));
 			
 			
 			//Creating the cells for Result and Score text
@@ -336,19 +337,11 @@ public class Excel {
 				Cell totalScore = totalScoreRow.createCell(column);
 				CellUtil.setAlignment(totalScore, HorizontalAlignment.CENTER);
 				totalScore.setCellValue(calc.totalScoreCalculation(cont.getSportEvents()));
-				if(totalScoreMerge) {
-					sh.addMergedRegion(new CellRangeAddress(16, 16, column, mergedColumnEnd));
-					this.totalScoreMerge = false;
-				}
 			} else if(mainEvent.equalsIgnoreCase("Heptathlon")) {
 				Row totalScoreRow = sh2.getRow(13);
 				Cell totalScore = totalScoreRow.createCell(column);
 				CellUtil.setAlignment(totalScore, HorizontalAlignment.CENTER);
 				totalScore.setCellValue(calc.totalScoreCalculation(cont.getSportEvents()));
-				if(totalScoreMerge) {
-					sh.addMergedRegion(new CellRangeAddress(13, 13, column, mergedColumnEnd));
-					this.totalScoreMerge = false;
-				}
 			}
 			
 			for (int i = 0; i < 81; i++) {
