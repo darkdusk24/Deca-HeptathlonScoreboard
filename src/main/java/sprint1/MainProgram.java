@@ -81,10 +81,11 @@ public class MainProgram {
 
 				Contestant competitor = new Contestant(name, number, country);
 				scoreboard.add(competitor);
+				
 
-				if (mainEvent.equalsIgnoreCase("Decathlon")) {
+				if (mainEvent.eventName.equalsIgnoreCase("Decathlon")) {
 					excel.decaContestantRegistration(competitor);
-				} else if (mainEvent.equalsIgnoreCase("Heptathlon")) {
+				} else if (mainEvent.eventName.equalsIgnoreCase("Heptathlon")) {
 					excel.heptaContestantRegistration(competitor);
 				}
 			} else {
@@ -99,7 +100,7 @@ public class MainProgram {
 	private static void resultInput() {
 		System.out.println(
 				"The result should be measured in seconds (running), metres (throwing) or centimetres (jumping). \n");
-		if ((mainEvent.eventName).equalsIgnoreCase("Decathlon")) {
+		if (mainEvent.eventName.equalsIgnoreCase("Decathlon")) {
 			for (int i = 0; i < decathlon.length; i++) {
 				for (int j = 0; j < scoreboard.size(); j++) {
 					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the " + decathlon[i]
@@ -124,7 +125,7 @@ public class MainProgram {
 					ConsoleOutput.printResultTable(scoreboard);
 				}
 			}
-		} else if ((mainEvent.eventName).equalsIgnoreCase("Heptathlon")) {
+		} else if (mainEvent.eventName.equalsIgnoreCase("Heptathlon")) {
 			for (int i = 0; i < heptathlon.length; i++) {
 				for (int j = 0; j < scoreboard.size(); j++) {
 					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the "
