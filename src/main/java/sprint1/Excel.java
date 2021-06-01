@@ -354,6 +354,7 @@ public class Excel {
 			for (int i = 0; i < 81; i++) {
 				sh.autoSizeColumn(i);
 			}
+			write();
 		}
 		
 		public void write() {
@@ -361,6 +362,7 @@ public class Excel {
 			FileOutputStream output = new FileOutputStream("src//main//java//" + excelName + ".xls");
 			workbook.write(output);
 			output.close();
+			workbook.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				}
