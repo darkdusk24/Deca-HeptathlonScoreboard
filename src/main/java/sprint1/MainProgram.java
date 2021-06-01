@@ -60,7 +60,6 @@ public class MainProgram {
 		}
 	}
 
-
 	private static void contestantInput() {
 		int contestants = 0;
 
