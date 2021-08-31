@@ -342,132 +342,132 @@ public class Excel {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public List<Contestant> continuingEvent(String main) {
-			List<Contestant> scoreboard = new ArrayList<>();
-			
-			Row nameRow;
-			Cell nameCell;
-			Row numberRow;
-			Cell numberCell;
-			Row countryRow;
-			Cell countryCell;
-			String name;
-			int number;
-			String country;
-			int column = 1;
-			
-			while (true) {
-				
-				int events = 1;
-				Contestant contestant;
-				
-				if(main.equalsIgnoreCase("Decathlon")) {
-					nameRow = sh.getRow(0);
-					numberRow = sh.getRow(1);
-					countryRow = sh.getRow(2);
-					
-					nameCell = nameRow.getCell(column);
-					numberCell = numberRow.getCell(column);
-					countryCell = countryRow.getCell(column);
-					
-					try {
-						name = nameCell.getStringCellValue();
-					} catch (Exception e) {
-						break;
-					}
-					
-					number = (int) numberCell.getNumericCellValue();
-					country = countryCell.getStringCellValue();
-					
-					contestant = new Contestant(name, number, country);
-					
-					while(events <= 10) {
-						Row eventRow = null;
-						if(events < 6) {
-							eventRow = sh.getRow((3 + events));
-						} else {
-							eventRow = sh.getRow((5 + events));
-						}
-						Cell eventCell = eventRow.getCell(0);
-						Cell eventResultCell;
-						Cell eventScoreCell;
-						double result;
-						int score;
-						String event;
-						
-						eventResultCell = eventRow.getCell(column);
-						eventScoreCell = eventRow.getCell((column + 1));
-						
-						try {
-							result = eventResultCell.getNumericCellValue();
-						} catch (Exception e) {
-							events = 11;
-							break;
-						}
-						
-						score = (int) eventScoreCell.getNumericCellValue();
-						event = eventCell.getStringCellValue();
-						contestant.addSportEvent(event, score, result);
-						
-						events++;
-					}
-					scoreboard.add(contestant);
-				} else if (main.equalsIgnoreCase("Heptathlon")) {
-					nameRow = sh2.getRow(0);
-					numberRow = sh2.getRow(1);
-					countryRow = sh2.getRow(2);
-					
-					nameCell = nameRow.getCell(column);
-					numberCell = numberRow.getCell(column);
-					countryCell = countryRow.getCell(column);
-					
-					try {
-						name = nameCell.getStringCellValue();
-					} catch (Exception e) {
-						break;
-					}
-					
-					number = (int) numberCell.getNumericCellValue();
-					country = countryCell.getStringCellValue();
-					
-					contestant = new Contestant(name, number, country);
-					
-					while(events <= 7) {
-						Row eventRow = null;
-						if(events < 4) {
-							eventRow = sh2.getRow((3 + events));
-						} else {
-							eventRow = sh2.getRow((5 + events));
-						}
-						Cell eventCell = eventRow.getCell(0);
-						Cell eventResultCell;
-						Cell eventScoreCell;
-						double result;
-						int score;
-						String event;
-						
-						eventResultCell = eventRow.getCell(column);
-						eventScoreCell = eventRow.getCell((column + 1));
-						
-						try {
-							result = eventResultCell.getNumericCellValue();
-						} catch (Exception e) {
-							events = 11;
-							break;
-						}
-						
-						score = (int) eventScoreCell.getNumericCellValue();
-						event = eventCell.getStringCellValue();
-						contestant.addSportEvent(event, score, result);
-						
-						events++;
-					}
-					scoreboard.add(contestant);
+		List<Contestant> scoreboard = new ArrayList<>();
+
+		Row nameRow;
+		Cell nameCell;
+		Row numberRow;
+		Cell numberCell;
+		Row countryRow;
+		Cell countryCell;
+		String name;
+		int number;
+		String country;
+		int column = 1;
+
+		while (true) {
+
+			int events = 1;
+			Contestant contestant;
+
+			if (main.equalsIgnoreCase("Decathlon")) {
+				nameRow = sh.getRow(0);
+				numberRow = sh.getRow(1);
+				countryRow = sh.getRow(2);
+
+				nameCell = nameRow.getCell(column);
+				numberCell = numberRow.getCell(column);
+				countryCell = countryRow.getCell(column);
+
+				try {
+					name = nameCell.getStringCellValue();
+				} catch (Exception e) {
+					break;
 				}
-				column += 2;
+
+				number = (int) numberCell.getNumericCellValue();
+				country = countryCell.getStringCellValue();
+
+				contestant = new Contestant(name, number, country);
+
+				while (events <= 10) {
+					Row eventRow = null;
+					if (events < 6) {
+						eventRow = sh.getRow((3 + events));
+					} else {
+						eventRow = sh.getRow((5 + events));
+					}
+					Cell eventCell = eventRow.getCell(0);
+					Cell eventResultCell;
+					Cell eventScoreCell;
+					double result;
+					int score;
+					String event;
+
+					eventResultCell = eventRow.getCell(column);
+					eventScoreCell = eventRow.getCell((column + 1));
+
+					try {
+						result = eventResultCell.getNumericCellValue();
+					} catch (Exception e) {
+						events = 11;
+						break;
+					}
+
+					score = (int) eventScoreCell.getNumericCellValue();
+					event = eventCell.getStringCellValue();
+					contestant.addSportEvent(event, score, result);
+
+					events++;
+				}
+				scoreboard.add(contestant);
+			} else if (main.equalsIgnoreCase("Heptathlon")) {
+				nameRow = sh2.getRow(0);
+				numberRow = sh2.getRow(1);
+				countryRow = sh2.getRow(2);
+
+				nameCell = nameRow.getCell(column);
+				numberCell = numberRow.getCell(column);
+				countryCell = countryRow.getCell(column);
+
+				try {
+					name = nameCell.getStringCellValue();
+				} catch (Exception e) {
+					break;
+				}
+
+				number = (int) numberCell.getNumericCellValue();
+				country = countryCell.getStringCellValue();
+
+				contestant = new Contestant(name, number, country);
+
+				while (events <= 7) {
+					Row eventRow = null;
+					if (events < 4) {
+						eventRow = sh2.getRow((3 + events));
+					} else {
+						eventRow = sh2.getRow((5 + events));
+					}
+					Cell eventCell = eventRow.getCell(0);
+					Cell eventResultCell;
+					Cell eventScoreCell;
+					double result;
+					int score;
+					String event;
+
+					eventResultCell = eventRow.getCell(column);
+					eventScoreCell = eventRow.getCell((column + 1));
+
+					try {
+						result = eventResultCell.getNumericCellValue();
+					} catch (Exception e) {
+						events = 11;
+						break;
+					}
+
+					score = (int) eventScoreCell.getNumericCellValue();
+					event = eventCell.getStringCellValue();
+					contestant.addSportEvent(event, score, result);
+
+					events++;
+				}
+				scoreboard.add(contestant);
 			}
-			
-			return scoreboard;
+			column += 2;
 		}
+
+		return scoreboard;
+	}
 }

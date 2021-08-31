@@ -131,7 +131,7 @@ public class MainProgram {
 							excel.setContestantsTotalScore(scoreboard.get(j), "Decathlon");
 						}
 					}
-					if(scoreboardAsk == true) {
+					if (scoreboardAsk == true) {
 						System.out.println(
 								"Input scoreboard if you want to see the scores. Input anything else to continue.");
 						String choice = scan.nextLine();
@@ -160,7 +160,7 @@ public class MainProgram {
 							excel.setContestantsTotalScore(scoreboard.get(j), "Heptathlon");
 						}
 					}
-					if(scoreboardAsk == true) {
+					if (scoreboardAsk == true) {
 						System.out.println(
 								"Input scoreboard if you want to see the scores. Input anything else to continue.");
 						String choice = scan.nextLine();
@@ -194,7 +194,7 @@ public class MainProgram {
 							excel.setContestantsTotalScore(scoreboard.get(j), "Decathlon");
 						}
 					}
-					if(scoreboardAsk == true) {
+					if (scoreboardAsk == true) {
 						System.out.println(
 								"Input scoreboard if you want to see the scores. Input anything else to continue.");
 						String choice = scan.nextLine();
@@ -224,8 +224,8 @@ public class MainProgram {
 							excel.setContestantsTotalScore(scoreboard.get(j), "Heptathlon");
 						}
 					}
-					
-					if(scoreboardAsk == true) {
+
+					if (scoreboardAsk == true) {
 						System.out.println(
 								"Input scoreboard if you want to see the scores. Input anything else to continue.");
 						String choice = scan.nextLine();
@@ -241,9 +241,9 @@ public class MainProgram {
 
 	private static int eventToContinueFrom() {
 		int nextEvent = 20;
-		
+
 		for (int i = 0; i < scoreboard.size(); i++) {
-			
+
 			int completedEvents = scoreboard.get(i).getSportEvents().size();
 
 			if (completedEvents < nextEvent) {
