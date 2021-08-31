@@ -1,12 +1,8 @@
 package sprint1;
 
-import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.Scanner;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class MainProgram {
 
@@ -19,12 +15,16 @@ public class MainProgram {
 			"Javelin throw", "800 m" };
 	private static ScoreCalculator calc = new ScoreCalculator();
 	private static MainEventType mainEvent = MainEventType.HEPTATHLON;
-	private static Excel excel = new Excel("Deca-HeptathlonScoreboard");;
+	private static boolean contin = false;
+	private static boolean scoreboardAsk = true;
+	private static Excel excel;
 
 	public static void main(String[] args) {
 		logIn();
 		mainEventInput();
-		contestantInput();
+		if (contin == false) {
+			contestantInput();
+		}
 		resultInput();
 	}
 
@@ -40,23 +40,35 @@ public class MainProgram {
 			}
 		}
 	}
-	
+
 	private static void mainEventInput() {
 		while (true) {
-			System.out.println("Default Main Event is " + mainEvent.eventName 
-			+ ". Type 1 to keep, 2 for Decathlon");
+			System.out.println("Type 1 to create a new contest. Type 2 to continue an old contest.");
+			int choice = Integer.valueOf(scan.nextLine());
+
+			if (choice == 2) {
+				contin = true;
+			}
+
+			System.out.println("Default Main Event is " + mainEvent.eventName + ". Type 1 to keep, 2 for Decathlon");
 			String eventSelection = scan.nextLine();
 
 			if (eventSelection.matches("1|h")) {
-			    break;
-			}	
-			if (eventSelection.matches("2|d")) {
-			    mainEvent = MainEventType.DECATHLON;
-			    System.out.println("Main Event is now " + mainEvent.eventName);
-			    break;
-			} else {
-			    System.out.println("Please type 1 for Heptahlon, 2 for Decathlon");
+				break;
 			}
+			if (eventSelection.matches("2|d")) {
+				mainEvent = MainEventType.DECATHLON;
+				System.out.println("Main Event is now " + mainEvent.eventName);
+				break;
+			} else {
+				System.out.println("Please type 1 for Heptahlon, 2 for Decathlon");
+			}
+		}
+
+		excel = new Excel("Deca-HeptathlonScoreboard", contin);
+		if (contin == true) {
+			scoreboard = excel.continuingEvent(mainEvent.eventName);
+			System.out.println(scoreboard.get(0).getName());
 		}
 	}
 
@@ -80,7 +92,6 @@ public class MainProgram {
 
 				Contestant competitor = new Contestant(name, number, country);
 				scoreboard.add(competitor);
-				
 
 				if (mainEvent.eventName.equalsIgnoreCase("Decathlon")) {
 					excel.decaContestantRegistration(competitor);
@@ -99,56 +110,162 @@ public class MainProgram {
 	private static void resultInput() {
 		System.out.println(
 				"The result should be measured in seconds (running), metres (throwing) or centimetres (jumping). \n");
-		if (mainEvent.eventName.equalsIgnoreCase("Decathlon")) {
-			for (int i = 0; i < decathlon.length; i++) {
-				for (int j = 0; j < scoreboard.size(); j++) {
-					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the " + decathlon[i]
-							+ " event. Or write exit to stop the program.");
+		if (contin == false) {
+			if (mainEvent.eventName.equalsIgnoreCase("Decathlon")) {
+				for (int i = 0; i < decathlon.length; i++) {
+					for (int j = 0; j < scoreboard.size(); j++) {
+						System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the "
+								+ decathlon[i] + " event. Or write exit to stop the program.");
 
-					String input = scan.nextLine();
+						String input = scan.nextLine();
 
-					if (input.equalsIgnoreCase("Exit")) {
-						i = 15;
-						break;
-					} else {
-						double result = Double.valueOf(input);
-						int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
-						scoreboard.get(j).addSportEvent(decathlon[i], score, result);
-						excel.setDecaContestantEventResultAndScore(scoreboard.get(j), decathlon[i]);
-						excel.setContestantsTotalScore(scoreboard.get(j), "Decathlon");
+						if (input.equalsIgnoreCase("Exit")) {
+							i = 15;
+							scoreboardAsk = false;
+							break;
+						} else {
+							double result = Double.valueOf(input);
+							int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
+							scoreboard.get(j).addSportEvent(decathlon[i], score, result);
+							excel.setDecaContestantEventResultAndScore(scoreboard.get(j), decathlon[i]);
+							excel.setContestantsTotalScore(scoreboard.get(j), "Decathlon");
+						}
+					}
+					if(scoreboardAsk == true) {
+						System.out.println(
+								"Input scoreboard if you want to see the scores. Input anything else to continue.");
+						String choice = scan.nextLine();
+						if (choice.equalsIgnoreCase("Scoreboard")) {
+							ConsoleOutput.printResultTable(scoreboard);
+						}
 					}
 				}
-				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");
-				String choice = scan.nextLine();
-				if (choice.equalsIgnoreCase("Scoreboard")) {
-					ConsoleOutput.printResultTable(scoreboard);
+			} else if (mainEvent.eventName.equalsIgnoreCase("Heptathlon")) {
+				for (int i = 0; i < heptathlon.length; i++) {
+					for (int j = 0; j < scoreboard.size(); j++) {
+						System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the "
+								+ heptathlon[i] + " event. Or write exit to stop the program.");
+
+						String input = scan.nextLine();
+
+						if (input.equalsIgnoreCase("Exit")) {
+							i = 15;
+							scoreboardAsk = false;
+							break;
+						} else {
+							double result = Double.valueOf(input);
+							int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
+							scoreboard.get(j).addSportEvent(heptathlon[i], score, result);
+							excel.setHeptaContestantEventResultAndScore(scoreboard.get(j), heptathlon[i]);
+							excel.setContestantsTotalScore(scoreboard.get(j), "Heptathlon");
+						}
+					}
+					if(scoreboardAsk == true) {
+						System.out.println(
+								"Input scoreboard if you want to see the scores. Input anything else to continue.");
+						String choice = scan.nextLine();
+						if (choice.equalsIgnoreCase("Scoreboard")) {
+							ConsoleOutput.printResultTable(scoreboard);
+						}
+					}
 				}
 			}
-		} else if (mainEvent.eventName.equalsIgnoreCase("Heptathlon")) {
-			for (int i = 0; i < heptathlon.length; i++) {
-				for (int j = 0; j < scoreboard.size(); j++) {
-					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the "
-							+ heptathlon[i] + " event. Or write exit to stop the program.");
+		} else if (contin == true) {
+			int eventContinue = eventToContinueFrom();
+			int contestantContinue = contestantToContinueFrom();
 
-					String input = scan.nextLine();
+			if (mainEvent.eventName.equalsIgnoreCase("Decathlon")) {
+				for (int i = eventContinue; i < decathlon.length; i++) {
+					for (int j = contestantContinue; j < scoreboard.size(); j++) {
+						System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the "
+								+ decathlon[i] + " event. Or write exit to stop the program.");
 
-					if (input.equalsIgnoreCase("Exit")) {
-						i = 15;
-						break;
-					} else {
-						double result = Double.valueOf(input);
-						int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
-						scoreboard.get(j).addSportEvent(heptathlon[i], score, result);
-						excel.setHeptaContestantEventResultAndScore(scoreboard.get(j), heptathlon[i]);
-						excel.setContestantsTotalScore(scoreboard.get(j), "Heptathlon");
+						String input = scan.nextLine();
+
+						if (input.equalsIgnoreCase("Exit")) {
+							i = 15;
+							scoreboardAsk = false;
+							break;
+						} else {
+							double result = Double.valueOf(input);
+							int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
+							scoreboard.get(j).addSportEvent(decathlon[i], score, result);
+							excel.setDecaContestantEventResultAndScore(scoreboard.get(j), decathlon[i]);
+							excel.setContestantsTotalScore(scoreboard.get(j), "Decathlon");
+						}
 					}
+					if(scoreboardAsk == true) {
+						System.out.println(
+								"Input scoreboard if you want to see the scores. Input anything else to continue.");
+						String choice = scan.nextLine();
+						if (choice.equalsIgnoreCase("Scoreboard")) {
+							ConsoleOutput.printResultTable(scoreboard);
+						}
+					}
+					contestantContinue = 0;
 				}
-				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");
-				String choice = scan.nextLine();
-				if (choice.equalsIgnoreCase("Scoreboard")) {
-					ConsoleOutput.printResultTable(scoreboard);
+			} else if (mainEvent.eventName.equalsIgnoreCase("Heptathlon")) {
+				for (int i = eventContinue; i < heptathlon.length; i++) {
+					for (int j = contestantContinue; j < scoreboard.size(); j++) {
+						System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the "
+								+ heptathlon[i] + " event. Or write exit to stop the program.");
+
+						String input = scan.nextLine();
+
+						if (input.equalsIgnoreCase("Exit")) {
+							i = 15;
+							scoreboardAsk = false;
+							break;
+						} else {
+							double result = Double.valueOf(input);
+							int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
+							scoreboard.get(j).addSportEvent(heptathlon[i], score, result);
+							excel.setHeptaContestantEventResultAndScore(scoreboard.get(j), heptathlon[i]);
+							excel.setContestantsTotalScore(scoreboard.get(j), "Heptathlon");
+						}
+					}
+					
+					if(scoreboardAsk == true) {
+						System.out.println(
+								"Input scoreboard if you want to see the scores. Input anything else to continue.");
+						String choice = scan.nextLine();
+						if (choice.equalsIgnoreCase("Scoreboard")) {
+							ConsoleOutput.printResultTable(scoreboard);
+						}
+					}
+					contestantContinue = 0;
 				}
 			}
 		}
+	}
+
+	private static int eventToContinueFrom() {
+		int nextEvent = 20;
+		
+		for (int i = 0; i < scoreboard.size(); i++) {
+			
+			int completedEvents = scoreboard.get(i).getSportEvents().size();
+
+			if (completedEvents < nextEvent) {
+				nextEvent = completedEvents;
+			}
+		}
+
+		return nextEvent;
+	}
+
+	private static int contestantToContinueFrom() {
+		int nextContestant = 0;
+		int completedEvents = 20;
+		for (int i = 0; i < scoreboard.size(); i++) {
+			int contestantsCompletedEvents = scoreboard.get(i).getSportEvents().size();
+
+			if (contestantsCompletedEvents < completedEvents) {
+				completedEvents = contestantsCompletedEvents;
+				nextContestant = i;
+			}
+		}
+
+		return nextContestant;
 	}
 }
