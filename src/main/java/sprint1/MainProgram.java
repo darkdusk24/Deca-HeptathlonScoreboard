@@ -40,37 +40,40 @@ public class MainProgram {
 			}
 		}
 	}
-	
+
 	private static void mainEventInput() {
 		while (true) {
-			System.out.println("Default Main Event is " + mainEvent.eventName 
-			+ ". Type 1 to keep, 2 for Decathlon");
+			System.out.println("Default Main Event is " + mainEvent.eventName + ". Type 1 to keep, 2 for Decathlon");
 			String eventSelection = scan.nextLine();
 
 			if (eventSelection.matches("1|h")) {
-			    break;
-			}	
+				break;
+			}
 			if (eventSelection.matches("2|d")) {
-			    mainEvent = MainEventType.DECATHLON;
-			    System.out.println("Main Event is now " + mainEvent.eventName);
-			    break;
+				mainEvent = MainEventType.DECATHLON;
+				System.out.println("Main Event is now " + mainEvent.eventName);
+				break;
 			} else {
-			    System.out.println("Please type 1 for Heptahlon, 2 for Decathlon");
+				System.out.println("Please type 1 for Heptahlon, 2 for Decathlon");
 			}
 		}
 	}
 
 	private static void contestantInput() {
 		int contestants = 0;
-
 		while (true) {
 			if (contestants < 40) {
 				System.out.println("Input the contestants name. Or input Exit to stop inputting contestants.");
-				String name = scan.nextLine();
+				String name = String.valueOf(scan.nextLine());
 
 				if (name.equalsIgnoreCase("Exit")) {
 					break;
 				}
+//					if (name.matches("^[\\p{L} .'-]+$")) {
+//						nameLoop = false;
+//					} else {
+//						System.out.println("Please enter a name using only letters and spaces");
+//					}
 
 				System.out.println("Input the contestants countrys alpha-3 code.");
 				String country = scan.nextLine();
@@ -80,7 +83,6 @@ public class MainProgram {
 
 				Contestant competitor = new Contestant(name, number, country);
 				scoreboard.add(competitor);
-				
 
 				if (mainEvent.eventName.equalsIgnoreCase("Decathlon")) {
 					excel.decaContestantRegistration(competitor);
@@ -97,11 +99,13 @@ public class MainProgram {
 	}
 
 	private static void resultInput() {
+		Boolean error;
 		System.out.println(
 				"The result should be measured in seconds (running), metres (throwing) or centimetres (jumping). \n");
 		if (mainEvent.eventName.equalsIgnoreCase("Decathlon")) {
 			for (int i = 0; i < decathlon.length; i++) {
 				for (int j = 0; j < scoreboard.size(); j++) {
+					error = false;
 					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the " + decathlon[i]
 							+ " event. Or write exit to stop the program.");
 
@@ -111,22 +115,35 @@ public class MainProgram {
 						i = 15;
 						break;
 					} else {
-						double result = Double.valueOf(input);
-						int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
-						scoreboard.get(j).addSportEvent(decathlon[i], score, result);
-						excel.setDecaContestantEventResultAndScore(scoreboard.get(j), decathlon[i]);
-						excel.setContestantsTotalScore(scoreboard.get(j), "Decathlon");
+						try {
+							double result = Double.valueOf(input);
+							int score = calc.eventScoreCalculation("Decathlon", decathlon[i], result);
+							scoreboard.get(j).addSportEvent(decathlon[i], score, result);
+							excel.setDecaContestantEventResultAndScore(scoreboard.get(j), decathlon[i]);
+							excel.setContestantsTotalScore(scoreboard.get(j), "Decathlon");
+						} catch (Exception e) {
+							System.out.println(
+									"\n **Incorrect input** \nThe result should be measured in seconds (running), metres (throwing) or centimetres (jumping). \n");
+							j -= 1;
+							error = true;
+						}
+
+					}
+					if (error == false) {
+						System.out.println(
+								"Input scoreboard if you want to see the scores. Input anything else to continue.");
+						String choice = scan.nextLine();
+						if (choice.equalsIgnoreCase("Scoreboard")) {
+							ConsoleOutput.printResultTable(scoreboard);
+						}
 					}
 				}
-				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");
-				String choice = scan.nextLine();
-				if (choice.equalsIgnoreCase("Scoreboard")) {
-					ConsoleOutput.printResultTable(scoreboard);
-				}
+
 			}
 		} else if (mainEvent.eventName.equalsIgnoreCase("Heptathlon")) {
 			for (int i = 0; i < heptathlon.length; i++) {
 				for (int j = 0; j < scoreboard.size(); j++) {
+					error = false;
 					System.out.println("Input the result " + scoreboard.get(j).getName() + " got on the "
 							+ heptathlon[i] + " event. Or write exit to stop the program.");
 
@@ -136,17 +153,31 @@ public class MainProgram {
 						i = 15;
 						break;
 					} else {
-						double result = Double.valueOf(input);
-						int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
-						scoreboard.get(j).addSportEvent(heptathlon[i], score, result);
-						excel.setHeptaContestantEventResultAndScore(scoreboard.get(j), heptathlon[i]);
-						excel.setContestantsTotalScore(scoreboard.get(j), "Heptathlon");
+						try {
+							double result = Double.valueOf(input);
+							int score = calc.eventScoreCalculation("Heptathlon", heptathlon[i], result);
+							scoreboard.get(j).addSportEvent(heptathlon[i], score, result);
+							excel.setHeptaContestantEventResultAndScore(scoreboard.get(j), heptathlon[i]);
+							excel.setContestantsTotalScore(scoreboard.get(j), "Heptathlon");
+						} catch (Exception e) {
+							System.out.println(
+									"\n **Incorrect input** \nThe result should be measured in seconds (running), metres (throwing) or centimetres (jumping). \n");
+							j -= 1;
+							error = true;
+
+						}
+
 					}
-				}
-				System.out.println("Input scoreboard if you want to see the scores. Input anything else to continue.");
-				String choice = scan.nextLine();
-				if (choice.equalsIgnoreCase("Scoreboard")) {
-					ConsoleOutput.printResultTable(scoreboard);
+					if (error == false) {
+						System.out.println(
+								"Input scoreboard if you want to see the scores. Input anything else to continue.");
+						String choice = scan.nextLine();
+						if (choice.equalsIgnoreCase("Scoreboard")) {
+							ConsoleOutput.printResultTable(scoreboard);
+
+						}
+
+					}
 				}
 			}
 		}
