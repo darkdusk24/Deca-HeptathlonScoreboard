@@ -7,10 +7,8 @@ public class Contestant implements Comparable<Contestant> {
 
 	private String name;
 	private int number;
-	private int place;
 	private String country;
 	private List<ContestantSportEvent> sportEvents = new ArrayList<>();
-	//private ScoreCalculator calc = MainProgram.getCalc();
 	
 	public Contestant(String name, int number, String country) {
 		super();
@@ -73,15 +71,6 @@ public class Contestant implements Comparable<Contestant> {
 		return totalScore;
 		}	
 	
-
-	public int getPlace() {
-		return place;
-	}
-
-	public void setPlace(int place) {
-		this.place = place;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

@@ -27,7 +27,7 @@ public class MainProgram {
 	}
 
 	public static void main(String[] args) {
-		//logIn();
+		logIn();
 		mainEventInput();
 		contestantInput();
 		resultInput();
