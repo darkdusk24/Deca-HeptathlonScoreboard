@@ -8,5 +8,5 @@ And I enter the contestants <number>
 Then the name is saved for later use 
 
 Examples:
-|						name| code|number|
-|"Bilbo Baggins"|"SWE"|		 12|
+|			name| code|number|
+|"Bilbo Baggins"|"SWE"|	   12|

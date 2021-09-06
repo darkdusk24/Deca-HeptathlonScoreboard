@@ -40,8 +40,6 @@ public class CompetitorsScore {
 		}
 		return totalScore;
 	}
-	
-
 
 	@Override
 	public String toString() {

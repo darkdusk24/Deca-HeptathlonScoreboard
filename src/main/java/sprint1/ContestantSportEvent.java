@@ -26,7 +26,7 @@ public class ContestantSportEvent {
 
 	@Override
 	public String toString() {
-		return sportEvent + ": score=" + score + ", result=" + result + "; ";
+		return "\n" +sportEvent.toUpperCase () + ":- Result = " + result  + ", Score = " + score + "; ";
 	}
 
 }

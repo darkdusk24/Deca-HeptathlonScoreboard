@@ -11,7 +11,7 @@ public class Contestant {
 	private String country;
 	private List<ContestantSportEvent> sportEvents = new ArrayList<>();
 	private ScoreCalculator calc = new ScoreCalculator();
-	
+
 	public Contestant(String name, int number, String country) {
 		super();
 		this.name = name;
@@ -21,37 +21,42 @@ public class Contestant {
 
 	public void setName(String string) {
 		name = string;
-
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public int getNumber() {
-		return number;
-	}
+
 
 	public void setNumber(int number) {
+
 		this.number = number;
+
+	}
+
+	public int getNumber() {
+
+			return number;
 	}
 
 	public String getCountry() {
-		return country;
+
+		return country.toUpperCase (); // added return country code in upper case
 	}
 
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
+
 	public void addSportEvent(String sportEvent, int score, double result) {
 		ContestantSportEvent event = new ContestantSportEvent(sportEvent, result, score);
 		this.sportEvents.add(event);
 	}
-	
+
 	public ContestantSportEvent getSportEvent(String event) {
 		int num = 0;
-		
+
 		while(num < sportEvents.size()) {
 			if(sportEvents.get(num).getSportEvent().equalsIgnoreCase(event)) {
 				break;
@@ -59,7 +64,7 @@ public class Contestant {
 				num++;
 			}
 		}
-		
+
 		return sportEvents.get(num);
 	}
 
@@ -83,7 +88,7 @@ public class Contestant {
 			scores += sportEvent.toString();
 			totalScore = calc.totalScoreCalculation(sportEvents);
 		}
-		return name + "(" + number + ") " + country + ": " + scores + " Total Score: " + totalScore;
+		return name + " (" + number + ") " + country.toUpperCase () + ": " + scores +"\n" +"TOTAL SCORE:- " + totalScore;
 	}
-  
+
 }
