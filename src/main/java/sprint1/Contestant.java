@@ -73,15 +73,13 @@ public class Contestant implements Comparable<Contestant> {
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getNumber() + ": ")
-		.append(getName() + " ")
-		.append("(" + getCountry() + ")" +",");
-
-		for(ContestantSportEvent event : sportEvents)
-		sb.append(event.getSportEvent() + ": " + event.getScore());
-		sb.append(" Total Score: " + getTotalScore());
-		return sb.toString();
+		String scores = "";
+		int totalScore = 0;
+		for (ContestantSportEvent sportEvent : getSportEvents()) {
+			scores += sportEvent.toString();
+			totalScore = MainProgram.getScoreCalculator().totalScoreCalculation(sportEvents);
+		}
+		return name + "(" + number + ") " + country + ": " + scores + " Total Score: " + totalScore;
 	}
 
 	@Override
