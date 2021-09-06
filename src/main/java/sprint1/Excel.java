@@ -33,7 +33,7 @@ public class Excel {
 		// For .xslx workbooks use XSSFWoorkbok();
 		// Create Sheets
 		this.decaSheet = workbook.createSheet("Decathlon");
-		this.heptaSheet = workbook.createSheet(MainProgram.getMainEvent().eventName);
+		this.heptaSheet = workbook.createSheet("Heptahlon");
 		decaColumnA();
 		heptaColumnA();
 		write();
