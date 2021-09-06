@@ -1,25 +1,29 @@
 package sprint1;
 
-import java.util.ArrayList;
-import java.io.*;
-import java.util.Iterator;
+import java.io.FileOutputStream;
 import java.util.List;
+
 //import sprint1.*;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.CellUtil;
 
 public class Excel {
 	
-		ScoreCalculator calc = new ScoreCalculator();
+		ScoreCalculator calc = MainProgram.getScoreCalculator();
 		Workbook workbook;
 		Cell cell, cell1;
 		Row row, row1;
 		CellStyle cellStyle;
 		Font font;
-		Sheet sh, sh2;
+		Sheet decaSheet, heptaSheet;
 		private String excelName;
 		
 		Excel(String name) {
@@ -28,8 +32,8 @@ public class Excel {
 		excelName = name;
 		// For .xslx workbooks use XSSFWoorkbok();
 		// Create Sheets
-		this.sh = workbook.createSheet("Decathlon");
-		this.sh2 = workbook.createSheet("Heptathlon");
+		this.decaSheet = workbook.createSheet("Decathlon");
+		this.heptaSheet = workbook.createSheet(MainProgram.getMainEvent().eventName);
 		decaColumnA();
 		heptaColumnA();
 		write();
@@ -59,7 +63,7 @@ public class Excel {
 		// Create Cells and Column A for Decathlon
 		int rowCount = 0;
 		for (Object emp[] : columnA) {
-			row = sh.createRow(rowCount++);
+			row = decaSheet.createRow(rowCount++);
 			int columnCount = 0;
 			for (Object value : emp) {
 				cell = row.createCell(columnCount++);
@@ -82,7 +86,7 @@ public class Excel {
 		public void decaContestantRegistration(Contestant cont) {
 			int column = 0;
 			while(true) {
-				Row checkRow = sh.getRow(0);
+				Row checkRow = decaSheet.getRow(0);
 				if(checkRow.getCell(column) == null) {
 					break;
 				} else {
@@ -90,25 +94,26 @@ public class Excel {
 				}
 			}
 			
-			Cell name = sh.getRow(0).createCell(column);
+			Cell name = decaSheet.getRow(0).createCell(column);
 			CellUtil.setAlignment(name, HorizontalAlignment.CENTER);
-			Cell number = sh.getRow(1).createCell(column);
+			Cell number = decaSheet.getRow(1).createCell(column);
 			CellUtil.setAlignment(number, HorizontalAlignment.CENTER);
-			Cell country = sh.getRow(2).createCell(column);
+			Cell country = decaSheet.getRow(2).createCell(column);
 			CellUtil.setAlignment(country, HorizontalAlignment.CENTER);
 			int mergedColumnEnd = column + 1;
 			
-			Cell nameSecondColumn = sh.getRow(0).createCell(mergedColumnEnd);
+			Cell nameSecondColumn = decaSheet.getRow(0).createCell(mergedColumnEnd);
 			nameSecondColumn.setCellValue("");
 			
 			name.setCellValue(cont.getName());
 			number.setCellValue(cont.getNumber());
 			country.setCellValue(cont.getCountry());
 			
-			sh.addMergedRegion(new CellRangeAddress(0, 0, column, mergedColumnEnd));
-			sh.addMergedRegion(new CellRangeAddress(1, 1, column, mergedColumnEnd));
-			sh.addMergedRegion(new CellRangeAddress(2, 2, column, mergedColumnEnd));
-			sh.addMergedRegion(new CellRangeAddress(16, 16, column, mergedColumnEnd));
+			decaSheet.addMergedRegion(new CellRangeAddress(0, 0, column, mergedColumnEnd));
+			decaSheet.addMergedRegion(new CellRangeAddress(1, 1, column, mergedColumnEnd));
+			decaSheet.addMergedRegion(new CellRangeAddress(2, 2, column, mergedColumnEnd));
+			decaSheet.addMergedRegion(new CellRangeAddress(16, 16, column, mergedColumnEnd));
+			decaSheet.addMergedRegion(new CellRangeAddress(17, 17, column, mergedColumnEnd));
 			
 			
 			//Creating the cells for Result and Score text
@@ -117,7 +122,7 @@ public class Excel {
 			font.setBold(true);
 			cellStyle.setFont(font);
 			
-			Row resultScore = sh.getRow(3);
+			Row resultScore = decaSheet.getRow(3);
 			Cell result = resultScore.createCell(column);
 			result.setCellValue("Result");
 			result.setCellStyle(cellStyle);
@@ -125,7 +130,7 @@ public class Excel {
 			score.setCellValue("Score");
 			score.setCellStyle(cellStyle);
 			for (int i = 0; i < 16; i++) {
-				sh.autoSizeColumn(i);
+				decaSheet.autoSizeColumn(i);
 			}
 			
 			write();
@@ -134,7 +139,7 @@ public class Excel {
 		public void heptaContestantRegistration(Contestant cont) {
 			int column = 0;
 			while(true) {
-				Row checkRow = sh2.getRow(0);
+				Row checkRow = heptaSheet.getRow(0);
 				if(checkRow.getCell(column) == null) {
 					break;
 				} else {
@@ -142,25 +147,26 @@ public class Excel {
 				}
 			}
 			
-			Cell name = sh2.getRow(0).createCell(column);
+			Cell name = heptaSheet.getRow(0).createCell(column);
 			CellUtil.setAlignment(name, HorizontalAlignment.CENTER);
-			Cell number = sh2.getRow(1).createCell(column);
+			Cell number = heptaSheet.getRow(1).createCell(column);
 			CellUtil.setAlignment(number, HorizontalAlignment.CENTER);
-			Cell country = sh2.getRow(2).createCell(column);
+			Cell country = heptaSheet.getRow(2).createCell(column);
 			CellUtil.setAlignment(country, HorizontalAlignment.CENTER);
 			int mergedColumnEnd = column + 1;
 			
-			Cell nameSecondColumn = sh2.getRow(0).createCell(mergedColumnEnd);
+			Cell nameSecondColumn = heptaSheet.getRow(0).createCell(mergedColumnEnd);
 			nameSecondColumn.setCellValue("");
 			
 			name.setCellValue(cont.getName());
 			number.setCellValue(cont.getNumber());
 			country.setCellValue(cont.getCountry());
 			
-			sh2.addMergedRegion(new CellRangeAddress(0, 0, column, mergedColumnEnd));
-			sh2.addMergedRegion(new CellRangeAddress(1, 1, column, mergedColumnEnd));
-			sh2.addMergedRegion(new CellRangeAddress(2, 2, column, mergedColumnEnd));
-			sh2.addMergedRegion(new CellRangeAddress(13, 13, column, mergedColumnEnd));
+			heptaSheet.addMergedRegion(new CellRangeAddress(0, 0, column, mergedColumnEnd));
+			heptaSheet.addMergedRegion(new CellRangeAddress(1, 1, column, mergedColumnEnd));
+			heptaSheet.addMergedRegion(new CellRangeAddress(2, 2, column, mergedColumnEnd));
+			heptaSheet.addMergedRegion(new CellRangeAddress(13, 13, column, mergedColumnEnd));
+			heptaSheet.addMergedRegion(new CellRangeAddress(14, 14, column, mergedColumnEnd));
 			
 			
 			//Creating the cells for Result and Score text
@@ -169,7 +175,7 @@ public class Excel {
 			font.setBold(true);
 			cellStyle.setFont(font);
 			
-			Row resultScore = sh2.getRow(3);
+			Row resultScore = heptaSheet.getRow(3);
 			Cell result = resultScore.createCell(column);
 			result.setCellValue("Result");
 			result.setCellStyle(cellStyle);
@@ -177,7 +183,7 @@ public class Excel {
 			score.setCellValue("Score");
 			score.setCellStyle(cellStyle);
 			for (int i = 0; i < 16; i++) {
-				sh2.autoSizeColumn(i);
+				heptaSheet.autoSizeColumn(i);
 			}
 			
 			write();
@@ -188,7 +194,7 @@ public class Excel {
 		int column = 0;
 		
 		while(true) {
-			Row checkRow = sh.getRow(row);
+			Row checkRow = decaSheet.getRow(row);
 			if(checkRow.getCell(0).getStringCellValue().equalsIgnoreCase(event)) {
 				break;
 			} else {
@@ -197,7 +203,7 @@ public class Excel {
 		}
 		
 		while(true) {
-			Row checkNameRow = sh.getRow(0);
+			Row checkNameRow = decaSheet.getRow(0);
 			if(checkNameRow.getCell(column).getStringCellValue().equalsIgnoreCase(cont.getName())) {
 				break;
 			} else {
@@ -205,7 +211,7 @@ public class Excel {
 			}
 		}
 		
-		Row assign = sh.getRow(row);
+		Row assign = decaSheet.getRow(row);
 		Cell result = assign.createCell(column);
 		CellUtil.setAlignment(result, HorizontalAlignment.CENTER);
 		Cell score = assign.createCell((column + 1));
@@ -215,7 +221,7 @@ public class Excel {
 		score.setCellValue(temp.getScore());
 		// Autosize Decathlon-Columns
 		for (int i = 0; i < 81; i++) {
-			sh.autoSizeColumn(i);
+			decaSheet.autoSizeColumn(i);
 		}
 		
 		write();
@@ -246,7 +252,7 @@ public class Excel {
 		// Create Cells and Column A for Heptathlon
 		int rowCount0 = 0;
 		for (Object emp[] : columnA1) {
-			row = sh2.createRow(rowCount0++);
+			row = heptaSheet.createRow(rowCount0++);
 			int columnCount = 0;
 			for (Object value : emp) {
 				cell = row.createCell(columnCount++);
@@ -271,7 +277,7 @@ public class Excel {
 			int column = 0;
 			
 			while(true) {
-				Row checkRow = sh2.getRow(row);
+				Row checkRow = heptaSheet.getRow(row);
 				if(checkRow.getCell(0).getStringCellValue().equalsIgnoreCase(event)) {
 					break;
 				} else {
@@ -280,7 +286,7 @@ public class Excel {
 			}
 			
 			while(true) {
-				Row checkNameRow = sh2.getRow(0);
+				Row checkNameRow = heptaSheet.getRow(0);
 				if(checkNameRow.getCell(column).getStringCellValue().equalsIgnoreCase(cont.getName())) {
 					break;
 				} else {
@@ -288,7 +294,7 @@ public class Excel {
 				}
 			}
 			
-			Row assign = sh2.getRow(row);
+			Row assign = heptaSheet.getRow(row);
 			Cell result = assign.createCell(column);
 			CellUtil.setAlignment(result, HorizontalAlignment.CENTER);
 			Cell score = assign.createCell((column + 1));
@@ -299,7 +305,7 @@ public class Excel {
 			
 			// Autosize Heptathlon-columns
 			for (int i = 0; i < 81; i++) {
-				sh2.autoSizeColumn(i);
+				heptaSheet.autoSizeColumn(i);
 				}
 			
 			write();
@@ -310,19 +316,19 @@ public class Excel {
 //			sh2.addMergedRegion(new CellRangeAddress(14, 14, 1, 3));
 		}
 		
-		public void setContestantsTotalScore(Contestant cont, String mainEvent) {
+		public void printContestantTotalScore(Contestant cont, String mainEvent) {
 			int column = 0;
 			
 			while(true) {
 				if(mainEvent.equalsIgnoreCase("Decathlon")) {
-					Row checkNameRow = sh.getRow(0);
+					Row checkNameRow = decaSheet.getRow(0);
 					if(checkNameRow.getCell(column).getStringCellValue().equalsIgnoreCase(cont.getName())) {
 						break;
 					} else {
 						column++;
 					}
 				} else if(mainEvent.equalsIgnoreCase("Heptathlon")) {
-					Row checkNameRow = sh2.getRow(0);
+					Row checkNameRow = heptaSheet.getRow(0);
 					if(checkNameRow.getCell(column).getStringCellValue().equalsIgnoreCase(cont.getName())) {
 						break;
 					} else {
@@ -330,24 +336,51 @@ public class Excel {
 					}
 				}
 			}
-			int mergedColumnEnd = column + 1;
+			//Används inte här
+			//int mergedColumnEnd = column + 1;
 			
 			if(mainEvent.equalsIgnoreCase("Decathlon")) {
-				Row totalScoreRow = sh.getRow(16);
+				Row totalScoreRow = decaSheet.getRow(16);
 				Cell totalScore = totalScoreRow.createCell(column);
 				CellUtil.setAlignment(totalScore, HorizontalAlignment.CENTER);
-				totalScore.setCellValue(calc.totalScoreCalculation(cont.getSportEvents()));
+				totalScore.setCellValue(cont.getTotalScore());
 			} else if(mainEvent.equalsIgnoreCase("Heptathlon")) {
-				Row totalScoreRow = sh2.getRow(13);
+				Row totalScoreRow = heptaSheet.getRow(13);
 				Cell totalScore = totalScoreRow.createCell(column);
 				CellUtil.setAlignment(totalScore, HorizontalAlignment.CENTER);
-				totalScore.setCellValue(calc.totalScoreCalculation(cont.getSportEvents()));
+				totalScore.setCellValue(cont.getTotalScore());
 			}
 			
 			for (int i = 0; i < 81; i++) {
-				sh.autoSizeColumn(i);
+				decaSheet.autoSizeColumn(i);
 			}
 			write();
+		}
+		
+		public void printContestantPlacing(List<Contestant> scoreboard, MainEventType mainEvent) {
+			int column = 1;
+			Sheet contestSheet = mainEvent == MainEventType.DECATHLON ? decaSheet : heptaSheet;
+			for(Contestant cont : scoreboard) {
+					column = findContestantColumn(column, contestSheet, cont.getName());
+					Row placingRow = mainEvent == MainEventType.DECATHLON ? decaSheet.getRow(17) : heptaSheet.getRow(14);
+					Cell contestantPlacingCell = placingRow.createCell(column);
+					CellUtil.setAlignment(contestantPlacingCell, HorizontalAlignment.CENTER);
+					//!
+					contestantPlacingCell.setCellValue(scoreboard.indexOf(cont)+1);
+				}// for
+			
+			for (int i = 0; i < 81; i++) {
+				contestSheet.autoSizeColumn(i);
+			}
+			write();
+		}
+
+		private int findContestantColumn(int col, Sheet cs, String cName) {
+			String contestantName= cs.getRow(0).getCell(col).getStringCellValue();
+			while(!contestantName.equalsIgnoreCase(cName)) {
+				col++;
+			}
+			return col;
 		}
 		
 		public void write() {

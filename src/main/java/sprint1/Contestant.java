@@ -3,14 +3,14 @@ package sprint1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contestant {
+public class Contestant implements Comparable<Contestant> {
 
 	private String name;
 	private int number;
 	private int place;
 	private String country;
 	private List<ContestantSportEvent> sportEvents = new ArrayList<>();
-	private ScoreCalculator calc = new ScoreCalculator();
+	//private ScoreCalculator calc = MainProgram.getCalc();
 	
 	public Contestant(String name, int number, String country) {
 		super();
@@ -59,13 +59,20 @@ public class Contestant {
 				num++;
 			}
 		}
-		
 		return sportEvents.get(num);
 	}
-
+	
 	public List<ContestantSportEvent> getSportEvents() {
 		return sportEvents;
 	}
+	
+	public int getTotalScore() {
+		int totalScore = 0;
+		for(ContestantSportEvent event : sportEvents )
+			totalScore += event.getScore();
+		return totalScore;
+		}	
+	
 
 	public int getPlace() {
 		return place;
@@ -77,13 +84,20 @@ public class Contestant {
 
 	@Override
 	public String toString() {
-		String scores = "";
-		int totalScore = 0;
-		for (ContestantSportEvent sportEvent : getSportEvents()) {
-			scores += sportEvent.toString();
-			totalScore = calc.totalScoreCalculation(sportEvents);
-		}
-		return name + "(" + number + ") " + country + ": " + scores + " Total Score: " + totalScore;
+		StringBuilder sb = new StringBuilder();
+		sb.append(getNumber() + ": ")
+		.append(getName() + " ")
+		.append("(" + getCountry() + ")" +",");
+
+		for(ContestantSportEvent event : sportEvents)
+		sb.append(event.getSportEvent() + ": " + event.getScore());
+		sb.append(" Total Score: " + getTotalScore());
+		return sb.toString();
+	}
+
+	@Override
+	public int compareTo(Contestant c) {
+		return (getTotalScore() < c.getTotalScore() ? 1 : (getTotalScore() == c.getTotalScore() ? 0 : -1));
 	}
   
 }
